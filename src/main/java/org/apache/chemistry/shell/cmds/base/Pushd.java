@@ -26,7 +26,7 @@ package org.apache.chemistry.shell.cmds.base;
 
 import java.util.Stack;
 
-import org.apache.chemistry.Folder;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.shell.app.Application;
 import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;

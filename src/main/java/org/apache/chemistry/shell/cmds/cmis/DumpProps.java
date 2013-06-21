@@ -24,7 +24,7 @@
 
 package org.apache.chemistry.shell.cmds.cmis;
 
-import org.apache.chemistry.CMISObject;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;
@@ -54,7 +54,7 @@ public class DumpProps extends ChemistryCommand {
             ctx = app.getContext();
         }
 
-        CMISObject obj = ctx.as(CMISObject.class);
+        CmisObject obj = ctx.as(CmisObject.class);
         if (obj != null) {
             new SimplePropertyManager(obj).dumpProperties();
         } else {

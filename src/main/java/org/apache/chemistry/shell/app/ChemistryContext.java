@@ -28,9 +28,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.chemistry.CMISObject;
-import org.apache.chemistry.Folder;
-import org.apache.chemistry.atompub.client.APPConnection;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.shell.util.ColorHelper;
 import org.apache.chemistry.shell.util.Path;
 
@@ -39,13 +39,13 @@ public class ChemistryContext extends AbstractContext {
     //public static final String CONN_KEY = "chemistry.connection";
 
     protected final APPConnection conn;
-    protected final CMISObject entry;
+    protected final CmisObject entry;
 
     protected String[] keys;
     protected String[] ls;
-    protected Map<String,CMISObject> children;
+    protected Map<String,CmisObject> children;
 
-    public ChemistryContext(ChemistryApp app, Path path, APPConnection conn, CMISObject entry) {
+    public ChemistryContext(ChemistryApp app, Path path, APPConnection conn, CmisObject entry) {
         super(app, path);
         this.conn = conn;
         this.entry = entry;
@@ -58,7 +58,7 @@ public class ChemistryContext extends AbstractContext {
 
     public Context getContext(String name) {
         load();
-        CMISObject e = children.get(name);
+        CmisObject e = children.get(name);
         if (e != null) {
             return new ChemistryContext((ChemistryApp) app, path.append(name), conn, e);
         }
@@ -91,12 +91,12 @@ public class ChemistryContext extends AbstractContext {
                 return;
             }
             Folder folder = (Folder) entry;
-            List<CMISObject> feed =  folder.getChildren();
-            children = new LinkedHashMap<String, CMISObject>();
+            ItemIterable<CmisObject> feed =  folder.getChildren();
+            children = new LinkedHashMap<String, CmisObject>();
             keys = new String[feed.size()];
             ls = new String[keys.length];
             int i = 0;
-            for (CMISObject entry : feed) {
+            for (CmisObject entry : feed) {
                 children.put(entry.getName(), entry);
                 keys[i] = entry.getName();
                 String entryTypeId = entry.getTypeId();

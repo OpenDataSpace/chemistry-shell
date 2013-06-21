@@ -24,7 +24,7 @@
 
 package org.apache.chemistry.shell.cmds.cmis;
 
-import org.apache.chemistry.Folder;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;

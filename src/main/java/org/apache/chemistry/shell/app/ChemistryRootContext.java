@@ -29,11 +29,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.chemistry.CMISObject;
-import org.apache.chemistry.Repository;
-import org.apache.chemistry.RepositoryEntry;
-import org.apache.chemistry.RepositoryManager;
-import org.apache.chemistry.atompub.client.APPConnection;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.shell.util.ColorHelper;
 import org.apache.chemistry.shell.util.Path;
 
@@ -79,7 +76,7 @@ public class ChemistryRootContext extends AbstractContext {
         params.put(Repository.PARAM_USERNAME, app.username);
         params.put(Repository.PARAM_PASSWORD, new String(app.password));
         APPConnection conn = (APPConnection) repo.getConnection(params);
-        CMISObject entry = conn.getRootFolder();
+        CmisObject entry = conn.getRootFolder();
         return new ChemistryContext((ChemistryApp) app, path.append(name),
                 conn, entry);
     }

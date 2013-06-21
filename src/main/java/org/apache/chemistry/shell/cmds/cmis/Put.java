@@ -27,8 +27,8 @@ package org.apache.chemistry.shell.cmds.cmis;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.chemistry.Document;
-import org.apache.chemistry.Folder;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;

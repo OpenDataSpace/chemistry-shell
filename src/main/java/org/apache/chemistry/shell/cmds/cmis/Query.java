@@ -24,7 +24,7 @@
 
 package org.apache.chemistry.shell.cmds.cmis;
 
-import org.apache.chemistry.CMISObject;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;
@@ -47,9 +47,9 @@ public class Query extends ChemistryCommand {
         }
 
         Context ctx = app.getContext();
-        CMISObject currentObj = ctx.as(CMISObject.class);
-        Collection<CMISObject> result = currentObj.getConnection().query(query, false);
-        for (CMISObject obj : result) {
+        CmisObject currentObj = ctx.as(CmisObject.class);
+        Collection<CmisObject> result = currentObj.getConnection().query(query, false);
+        for (CmisObject obj : result) {
             println(obj.getName());
         }
     }

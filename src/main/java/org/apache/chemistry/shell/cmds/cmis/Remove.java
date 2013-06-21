@@ -24,9 +24,8 @@
 
 package org.apache.chemistry.shell.cmds.cmis;
 
-import org.apache.chemistry.CMISObject;
-import org.apache.chemistry.Folder;
-import org.apache.chemistry.Unfiling;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;
@@ -55,7 +54,7 @@ public class Remove extends ChemistryCommand {
         }
 
         boolean success = false;
-        for (CMISObject child : folder.getChildren()) {
+        for (CmisObject child : folder.getChildren()) {
             // TODO: use wildcard but make sure it's safe
             // if (StringUtils.matches(name, child.getName())) {
             if (name.equals(child.getName())) {

@@ -27,9 +27,9 @@ package org.apache.chemistry.shell.util;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.chemistry.BaseType;
-import org.apache.chemistry.CMISObject;
-import org.apache.chemistry.Folder;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.shell.app.Console;
 
 public class SimpleBrowser {
@@ -50,8 +50,8 @@ public class SimpleBrowser {
 
     protected void doBrowse(String tabs, Folder currentNode) throws IOException {
         dumpWithPath(tabs, currentNode);
-        List<CMISObject> children = currentNode.getChildren();
-        for (CMISObject child : children) {
+        ItemIterable<CmisObject> children = currentNode.getChildren();
+        for (CmisObject child : children) {
             if (BaseType.FOLDER.equals(child.getBaseType())) {
                 Folder folder = (Folder) child;
                 doBrowse(tabs + "--+", folder);
@@ -61,7 +61,7 @@ public class SimpleBrowser {
         }
     }
 
-    protected void dumpWithPath(String tabs, CMISObject item) {
+    protected void dumpWithPath(String tabs, CmisObject item) {
         Console.getDefault().println(tabs+ " "+ item.getName()+" ["+item.getType().getId()+"]");
     }
 

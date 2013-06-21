@@ -24,8 +24,8 @@
 
 package org.apache.chemistry.shell.util;
 
-import org.apache.chemistry.Document;
-import org.apache.chemistry.Folder;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
 
 public class SimpleCreator {
 

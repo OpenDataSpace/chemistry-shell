@@ -24,7 +24,7 @@
 
 package org.apache.chemistry.shell.cmds.base;
 
-import org.apache.chemistry.Document;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.shell.app.Application;
 import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;

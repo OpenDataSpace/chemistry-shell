@@ -28,9 +28,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.chemistry.Repository;
-import org.apache.chemistry.RepositoryManager;
-import org.apache.chemistry.atompub.client.APPRepositoryService;
+import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.shell.cmds.cmis.Cat;
 import org.apache.chemistry.shell.cmds.cmis.CreateFile;
 import org.apache.chemistry.shell.cmds.cmis.CreateFolder;

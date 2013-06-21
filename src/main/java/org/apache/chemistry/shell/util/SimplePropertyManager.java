@@ -32,19 +32,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.chemistry.CMISObject;
-import org.apache.chemistry.ContentStream;
-import org.apache.chemistry.Document;
-import org.apache.chemistry.Property;
-import org.apache.chemistry.impl.simple.SimpleContentStream;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Property;
+import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.CommandException;
 
 public class SimplePropertyManager {
 
-    protected final CMISObject item;
+    protected final CmisObject item;
 
-    public SimplePropertyManager(CMISObject item) {
+    public SimplePropertyManager(CmisObject item) {
         this.item = item;
     }
 

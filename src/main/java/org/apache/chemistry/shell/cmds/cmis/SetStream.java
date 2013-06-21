@@ -27,7 +27,7 @@ package org.apache.chemistry.shell.cmds.cmis;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.chemistry.CMISObject;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;
@@ -48,7 +48,7 @@ public class SetStream extends ChemistryCommand {
         String filename = cmdLine.getParameterValue("filename");
 
         Context ctx = app.resolveContext(new Path(target));
-        CMISObject obj = ctx.as(CMISObject.class);
+        CmisObject obj = ctx.as(CmisObject.class);
 
         if (obj == null) {
             throw new CommandException("Cannot resolve "+target);
