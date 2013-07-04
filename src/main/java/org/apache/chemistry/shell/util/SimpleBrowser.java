@@ -25,11 +25,11 @@
 package org.apache.chemistry.shell.util;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.ObjectType;
 import org.apache.chemistry.shell.app.Console;
 
 public class SimpleBrowser {
@@ -52,7 +52,7 @@ public class SimpleBrowser {
         dumpWithPath(tabs, currentNode);
         ItemIterable<CmisObject> children = currentNode.getChildren();
         for (CmisObject child : children) {
-            if (BaseType.FOLDER.equals(child.getBaseType())) {
+            if (ObjectType.FOLDER_BASETYPE_ID.equals(child.getType())) {
                 Folder folder = (Folder) child;
                 doBrowse(tabs + "--+", folder);
             } else {

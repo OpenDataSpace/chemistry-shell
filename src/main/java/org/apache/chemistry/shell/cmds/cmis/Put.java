@@ -80,7 +80,7 @@ public class Put extends ChemistryCommand {
         File file = app.resolveFile(source);
         FileInputStream in = new FileInputStream(file);
         try {
-            new SimplePropertyManager(obj).setStream(in, file.getName());
+            new SimplePropertyManager(obj).setStream(in, file.length(), file.getName());
         } finally {
             in.close();
         }

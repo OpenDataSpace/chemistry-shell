@@ -24,15 +24,14 @@
 
 package org.apache.chemistry.shell.cmds.cmis;
 
-import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.QueryResult;
+import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
-import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
-
-import java.util.Collection;
 
 @Cmd(syntax="query query", synopsis="Run a CMISQL query")
 public class Query extends ChemistryCommand {
@@ -45,12 +44,10 @@ public class Query extends ChemistryCommand {
         if (query == null) {
             throw new CommandException("Please specify a query");
         }
-
-        Context ctx = app.getContext();
-        CmisObject currentObj = ctx.as(CmisObject.class);
-        Collection<CmisObject> result = currentObj.getConnection().query(query, false);
-        for (CmisObject obj : result) {
-            println(obj.getName());
+        Session session = app.getSession();
+        ItemIterable<QueryResult> result = session.query(query, false);
+        for (QueryResult obj : result) {
+            println(obj.toString());
         }
     }
 

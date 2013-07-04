@@ -29,6 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Repository;
+import org.apache.chemistry.opencmis.client.api.Session;
+import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
+import org.apache.chemistry.opencmis.commons.SessionParameter;
+import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.shell.cmds.cmis.Cat;
 import org.apache.chemistry.shell.cmds.cmis.CreateFile;
 import org.apache.chemistry.shell.cmds.cmis.CreateFolder;
@@ -49,8 +53,13 @@ import org.apache.chemistry.shell.cmds.cmis.SetStream;
 public class ChemistryApp extends AbstractApplication {
 
     protected APPRepositoryService repositoryService;
+    private Session session;
 
-    public ChemistryApp() {
+    public Session getSession() {
+		return session;
+	}
+
+	public ChemistryApp() {
         registry.registerCommand(new DumpTree());
         registry.registerCommand(new SetProp());
         registry.registerCommand(new PropGet());
@@ -67,6 +76,16 @@ public class ChemistryApp extends AbstractApplication {
 
     @Override
     protected void doConnect() {
+    	Map<String, String> parameters = new HashMap<String, String>();
+    	parameters.put(SessionParameter.USER, username);
+    	parameters.put(SessionParameter.PASSWORD, new String(password));
+
+    	// connection settings
+    	parameters.put(SessionParameter.ATOMPUB_URL, serverUrl.toExternalForm());
+    	parameters.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
+    	parameters.put(SessionParameter.REPOSITORY_ID, "myRepository");
+
+    	Session session = SessionFactoryImpl.newInstance().createSession(parameters);
         Map<String, Serializable> params = new HashMap<String, Serializable>();
         params.put(Repository.PARAM_USERNAME, username);
         params.put(Repository.PARAM_PASSWORD, password == null ? null

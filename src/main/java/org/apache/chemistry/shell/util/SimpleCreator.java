@@ -24,8 +24,12 @@
 
 package org.apache.chemistry.shell.util;
 
-import org.apache.chemistry.opencmis.client.api.Document;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.enums.VersioningState;
 
 public class SimpleCreator {
 
@@ -36,19 +40,19 @@ public class SimpleCreator {
     }
 
     public void createFolder(String typeName, String name) throws Exception {
-        Folder newFolder = folder.newFolder(typeName);
-        newFolder.setName(name);
-        // TODO
-        //newFolder.setValue("dc:title", name);
-        newFolder.save();
+    	// (minimal set: name and object type id)
+    	Map<String, Object> properties = new HashMap<String, Object>();
+    	properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
+    	properties.put(PropertyIds.NAME, name);
+        folder.createFolder(properties);
     }
 
     public void createFile(String typeName, String name) throws Exception {
-        Document newDoc = folder.newDocument(typeName);
-        newDoc.setName(name);
-        // TODO
-        //newDoc.setValue("dc:title", name);
-        newDoc.save();
+    	// (minimal set: name and object type id)
+    	Map<String, Object> properties = new HashMap<String, Object>();
+    	properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
+    	properties.put(PropertyIds.NAME, name);
+        folder.createDocument(properties, null, VersioningState.MAJOR);
     }
 
 }

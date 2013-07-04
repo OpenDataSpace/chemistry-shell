@@ -26,6 +26,7 @@ package org.apache.chemistry.shell.cmds.cmis;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;
@@ -42,6 +43,8 @@ public class Remove extends ChemistryCommand {
             throws Exception {
         String param = cmdLine.getParameterValue("target");
         boolean recurse = cmdLine.getParameter("-r") != null;
+        boolean allVersions = false;
+        boolean continueOnFailure = true;
 
         Path path = new Path(param);
         String name = path.getLastSegment();
@@ -59,7 +62,7 @@ public class Remove extends ChemistryCommand {
             // if (StringUtils.matches(name, child.getName())) {
             if (name.equals(child.getName())) {
                 if (recurse && child instanceof Folder) {
-                    ((Folder) child).deleteTree(Unfiling.UNFILE);
+                    ((Folder) child).deleteTree(allVersions,UnfileObject.UNFILE,continueOnFailure);
                 } else {
                     child.delete();
                 }

@@ -27,8 +27,10 @@ package org.apache.chemistry.shell.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,58 +38,73 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
+import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.CommandException;
 
 public class SimplePropertyManager {
 
-    protected final CmisObject item;
+	private final class PropertyComparator implements Comparator<Property<?>> {
 
-    public SimplePropertyManager(CmisObject item) {
-        this.item = item;
-    }
+		public int compare(Property<?> p1, Property<?> p2) {
+			return p1.getId().compareTo(p2.getId());
+		}
+	}
 
-    public String getPropertyAsString(String name) {
-        Property p = item.getProperty(name);
-        if (p == null) {
-            return "[null]";
-        }
-        Serializable val = p.getValue();
-        return val != null ? val.toString() : "[null]";
-    }
+	protected final CmisObject item;
 
-    public void setProperty(String name, Serializable value) throws Exception{
-        item.setValue(name, value);
-        item.save();
-    }
+	public SimplePropertyManager(CmisObject item) {
+		this.item = item;
+	}
 
-    public void dumpProperties() {
-        Map<String, Property> props = item.getProperties();
+	public String getPropertyAsString(String name) {
+		Property<Object> p = item.getProperty(name);
+		if (p == null) {
+			return "[null]";
+		}
+		Serializable val = p.getValue();
+		return val != null ? val.toString() : "[null]";
+	}
 
-        List<String> keys = new LinkedList<String>(props.keySet());
-        Collections.sort(keys);
+	public void setProperty(String name, String value) throws Exception {
+		Map<String, String> properties = new HashMap<String, String>();
+		properties.put(name, value);
+		item.updateProperties(properties);
+	}
 
-        for (String key : keys) {
-            Property prop = props.get(key);
-            Object value = prop.getValue();
-            Console.getDefault().println(key + " = " + (value != null ? value : "[null]"));
-        }
-    }
+	public void dumpProperties() {
+		List<Property<?>> props = item.getProperties();
+		Collections.sort(props, new PropertyComparator());
 
-    public ContentStream getStream() throws IOException {
-        return  item.getContentStream(null);
-    }
+		for (Property<?> prop : props) {
+			Object value = prop.getValue();
+			Console.getDefault().println(
+					prop.getId() + " = " + (value != null ? value : "[null]"));
+		}
+	}
 
-    public void setStream(InputStream in, String name) throws Exception {
-        if (item instanceof Document) {
-            Document doc = (Document) item;
-            String mimeType = MimeTypeHelper.getMimeType(name);
-            ContentStream stream = new SimpleContentStream(in, mimeType, name);
-            doc.setContentStream(stream);
-            doc.save();
-        } else {
-            throw new CommandException("Target object is not a Document, can not set stream");
-        }
-    }
+	public ContentStream getStream() throws IOException, CommandException {
+		if (item instanceof Document) {
+			Document doc = (Document) item;
+			return doc.getContentStream();
+		} else {
+			throw new CommandException(
+					"Target object is not a Document, can not get stream");
+		}
+	}
+
+	public void setStream(InputStream in, long filesize, String name)
+			throws Exception {
+		if (item instanceof Document) {
+			Document doc = (Document) item;
+			String mimeType = MimeTypeHelper.getMimeType(name);
+			ContentStream stream = new ContentStreamImpl(name,
+					BigInteger.valueOf(filesize), mimeType, in);
+			doc.setContentStream(stream, true);
+		} else {
+			throw new CommandException(
+					"Target object is not a Document, can not set stream");
+		}
+	}
 
 }

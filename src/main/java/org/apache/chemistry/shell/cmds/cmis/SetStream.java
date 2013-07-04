@@ -57,7 +57,7 @@ public class SetStream extends ChemistryCommand {
         File file = app.resolveFile(filename);
         FileInputStream in = new FileInputStream(file);
         try {
-            new SimplePropertyManager(obj).setStream(in, file.getName());
+            new SimplePropertyManager(obj).setStream(in, file.length(), file.getName());
         } finally {
             in.close();
         }
