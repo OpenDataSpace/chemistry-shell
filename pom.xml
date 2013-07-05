@@ -12,7 +12,7 @@
   <groupId>org.apache.chemistry</groupId>
   <artifactId>chemistry-shell</artifactId>
   <name>Chemistry Shell (aka CMIS Shell or cmissh)</name>
-  <version>0.5</version>
+  <version>0.5-SNAPSHOT</version>
   <description>Command-line client using APP protocol binding for CMIS</description>
 
   <prerequisites>
@@ -85,12 +85,13 @@
         <version>2.8</version>
         <executions>
           <execution>
-            <id>unpack-dependencies</id>
-            <phase>package</phase>
+            <id>copy</id>
+            <phase>process-resources</phase>
             <goals>
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
+              <outputDirectory>target/classes</outputDirectory>
             </configuration>
           </execution>
         </executions>
