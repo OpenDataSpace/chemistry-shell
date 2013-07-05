@@ -25,98 +25,109 @@
 package org.apache.chemistry.shell.app;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.shell.util.ColorHelper;
 import org.apache.chemistry.shell.util.Path;
 
 public class ChemistryContext extends AbstractContext {
 
-    //public static final String CONN_KEY = "chemistry.connection";
+	// public static final String CONN_KEY = "chemistry.connection";
 
-    protected final APPConnection conn;
-    protected final CmisObject entry;
+	protected final Session session;
+	protected final CmisObject entry;
 
-    protected String[] keys;
-    protected String[] ls;
-    protected Map<String,CmisObject> children;
+	protected List<String> keys;
+	protected List<String> ls;
+	protected Map<String, CmisObject> children;
 
-    public ChemistryContext(ChemistryApp app, Path path, APPConnection conn, CmisObject entry) {
-        super(app, path);
-        this.conn = conn;
-        this.entry = entry;
-    }
+	public ChemistryContext(ChemistryApp app, Path path, Session session,
+			CmisObject entry) {
+		super(app, path);
+		this.session = session;
+		this.entry = entry;
+	}
 
-    @Override
-    public ChemistryApp getApplication() {
-        return (ChemistryApp)app;
-    }
+	@Override
+	public ChemistryApp getApplication() {
+		return (ChemistryApp) app;
+	}
+	
+	public Session getSession() {
+		return session;
+	}
 
-    public Context getContext(String name) {
-        load();
-        CmisObject e = children.get(name);
-        if (e != null) {
-            return new ChemistryContext((ChemistryApp) app, path.append(name), conn, e);
-        }
-        return null;
-    }
+	public Context getContext(String name) {
+		load();
+		CmisObject e = children.get(name);
+		if (e != null) {
+			return new ChemistryContext((ChemistryApp) app, path.append(name),
+					session, e);
+		}
+		return null;
+	}
 
-    public String[] ls() {
-        load();
-        return ls;
-    }
+	public String[] ls() {
+		load();
+		return ls.toArray(new String[ls.size()]);
+	}
 
-    public String[] entries() {
-        load();
-        return keys;
-    }
+	public String[] entries() {
+		load();
+		return keys.toArray(new String[keys.size()]);
+	}
 
-    public void reset() {
-        children = null;
-        keys = null;
-        ls = null;
-    }
+	public void reset() {
+		children = null;
+		keys = null;
+		ls = null;
+	}
 
-    public boolean isFolder() {
-        return entry instanceof Folder;
-    }
+	public boolean isFolder() {
+		return entry instanceof Folder;
+	}
 
-    protected void load() {
-        if (children == null) {
-            if (!isFolder()) {
-                return;
-            }
-            Folder folder = (Folder) entry;
-            ItemIterable<CmisObject> feed =  folder.getChildren();
-            children = new LinkedHashMap<String, CmisObject>();
-            keys = new String[feed.size()];
-            ls = new String[keys.length];
-            int i = 0;
-            for (CmisObject entry : feed) {
-                children.put(entry.getName(), entry);
-                keys[i] = entry.getName();
-                String entryTypeId = entry.getTypeId();
-                if (entryTypeId.startsWith("cmis:")) {
-                    entryTypeId = entryTypeId.substring("cmis:".length());
-                }
-                ls[i++] = ColorHelper.decorateNameByType(entry.getName(), entryTypeId);
-            }
-        }
-    }
+	protected void load() {
+		if (children == null) {
+			if (!isFolder()) {
+				return;
+			}
+			Folder folder = (Folder) entry;
+			ItemIterable<CmisObject> feed = folder.getChildren();
+			children.clear();
+			children = new LinkedHashMap<String, CmisObject>();
+			if (keys != null)
+				keys.clear();
+			keys = new LinkedList<String>();
+			ls = new LinkedList<String>();
+			for (CmisObject entry : feed) {
+				children.put(entry.getName(), entry);
+				keys.add(entry.getName());
+				String entryTypeId = entry.getType().getId();
+				if (entryTypeId.startsWith("cmis:")) {
+					entryTypeId = entryTypeId.substring("cmis:".length());
+				}
+				ls.add(ColorHelper.decorateNameByType(entry.getName(),
+						entryTypeId));
+			}
+		}
+	}
 
-    public <T> T as(Class<T> type) {
-        if (type.isAssignableFrom(entry.getClass())) {
-            return type.cast(entry);
-        }
-        return null;
-    }
+	public <T> T as(Class<T> type) {
+		if (type.isAssignableFrom(entry.getClass())) {
+			return type.cast(entry);
+		}
+		return null;
+	}
 
-    public String id() {
-        return "Object "+entry.getId()+" of type "+entry.getTypeId();
-    }
+	public String id() {
+		return "Object " + entry.getId() + " of type " + entry.getType().getId();
+	}
 
 }

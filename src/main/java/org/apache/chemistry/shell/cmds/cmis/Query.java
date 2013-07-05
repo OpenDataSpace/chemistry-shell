@@ -29,6 +29,7 @@ import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
+import org.apache.chemistry.shell.app.ChemistryContext;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
@@ -44,7 +45,7 @@ public class Query extends ChemistryCommand {
         if (query == null) {
             throw new CommandException("Please specify a query");
         }
-        Session session = app.getSession();
+        Session session = ((ChemistryContext) app.getContext()).getSession();
         ItemIterable<QueryResult> result = session.query(query, false);
         for (QueryResult obj : result) {
             println(obj.toString());

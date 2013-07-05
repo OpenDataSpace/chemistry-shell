@@ -24,13 +24,11 @@
 
 package org.apache.chemistry.shell.app;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Repository;
+import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.shell.util.ColorHelper;
 import org.apache.chemistry.shell.util.Path;
 
@@ -63,22 +61,19 @@ public class ChemistryRootContext extends AbstractContext {
         }
         // lookup repository by name
         Repository repo = null;
-        for (RepositoryEntry re : RepositoryManager.getInstance().getRepositories()) {
+        for (Repository re : app.getRepositories()) {
             if (re.getName().equals(name)) {
-                repo = RepositoryManager.getInstance().getRepository(re.getId());
+                repo = re;
                 break;
             }
         }
         if (repo == null) {
             return null;
         }
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put(Repository.PARAM_USERNAME, app.username);
-        params.put(Repository.PARAM_PASSWORD, new String(app.password));
-        APPConnection conn = (APPConnection) repo.getConnection(params);
-        CmisObject entry = conn.getRootFolder();
-        return new ChemistryContext((ChemistryApp) app, path.append(name),
-                conn, entry);
+        Session session = repo.createSession();
+        CmisObject entry = session.getRootFolder();
+        return new ChemistryContext( app, path.append(name),
+                session, entry);
     }
 
     public String[] ls() {
@@ -104,12 +99,12 @@ public class ChemistryRootContext extends AbstractContext {
                     "Not connected: cannot browse repository");
             return false;
         }
-        Collection<RepositoryEntry> repos = RepositoryManager.getInstance().getRepositories();
+        List<Repository> repos = getApplication().getRepositories();
         int size = repos.size();
         keys = new String[size];
         ls = new String[size];
         int i = 0;
-        for (RepositoryEntry repo : repos) {
+        for (Repository repo : repos) {
             String name = repo.getName();
             keys[i] = name;
             ls[i] = ColorHelper.decorateNameByType(name, "Repository");

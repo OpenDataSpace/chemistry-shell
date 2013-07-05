@@ -24,13 +24,12 @@
 
 package org.apache.chemistry.shell.app;
 
-import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Repository;
-import org.apache.chemistry.opencmis.client.api.Session;
-import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
+import org.apache.chemistry.opencmis.client.api.SessionFactory;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.shell.cmds.cmis.Cat;
@@ -52,11 +51,11 @@ import org.apache.chemistry.shell.cmds.cmis.SetStream;
  */
 public class ChemistryApp extends AbstractApplication {
 
-    protected APPRepositoryService repositoryService;
-    private Session session;
+    private SessionFactory sessionFactory;
+	private List<Repository> repos;
 
-    public Session getSession() {
-		return session;
+	public List<Repository> getRepositories() {
+		return repos;
 	}
 
 	public ChemistryApp() {
@@ -83,25 +82,16 @@ public class ChemistryApp extends AbstractApplication {
     	// connection settings
     	parameters.put(SessionParameter.ATOMPUB_URL, serverUrl.toExternalForm());
     	parameters.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
-    	parameters.put(SessionParameter.REPOSITORY_ID, "myRepository");
-
-    	Session session = SessionFactoryImpl.newInstance().createSession(parameters);
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
-        params.put(Repository.PARAM_USERNAME, username);
-        params.put(Repository.PARAM_PASSWORD, password == null ? null
-                : new String(password));
-        repositoryService = new APPRepositoryService(
-                serverUrl.toExternalForm(), params);
-        RepositoryManager.getInstance().registerService(repositoryService);
+    	this.repos = sessionFactory.getRepositories(parameters);
     }
 
     public void disconnect() {
-        RepositoryManager.getInstance().unregisterService(repositoryService);
-        repositoryService = null;
+    	if(this.repos!=null)
+    		this.repos.clear();
     }
 
     public boolean isConnected() {
-        return repositoryService != null;
+        return repos != null;
     }
 
     public Context getRootContext() {
