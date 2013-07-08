@@ -52,6 +52,13 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+    	Runtime runtime = Runtime.getRuntime();
+    	runtime.addShutdownHook(new Thread(new Runnable() {
+			
+			public void run() {
+				Console.getDefault().println("Bye.");
+			}
+		}));
         Main main = new Main();
         main.parseArgs(args);
         main.run();
