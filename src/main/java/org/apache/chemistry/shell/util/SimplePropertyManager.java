@@ -31,6 +31,7 @@ import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +74,8 @@ public class SimplePropertyManager {
 	}
 
 	public void dumpProperties() {
-		List<Property<?>> props = item.getProperties();
+		List<Property<?>> props = new LinkedList<Property<?>>(
+				item.getProperties());
 		Collections.sort(props, new PropertyComparator());
 
 		for (Property<?> prop : props) {

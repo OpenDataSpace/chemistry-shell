@@ -100,10 +100,10 @@ public class ChemistryContext extends AbstractContext {
 			}
 			Folder folder = (Folder) entry;
 			ItemIterable<CmisObject> feed = folder.getChildren();
-			children.clear();
 			children = new LinkedHashMap<String, CmisObject>();
-			if (keys != null)
+			if (keys != null) {
 				keys.clear();
+			}
 			keys = new LinkedList<String>();
 			ls = new LinkedList<String>();
 			for (CmisObject entry : feed) {

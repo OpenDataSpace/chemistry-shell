@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.opencmis.client.api.SessionFactory;
+import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.shell.cmds.cmis.Cat;
@@ -51,7 +52,7 @@ import org.apache.chemistry.shell.cmds.cmis.SetStream;
  */
 public class ChemistryApp extends AbstractApplication {
 
-    private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
 	private List<Repository> repos;
 
 	public List<Repository> getRepositories() {
