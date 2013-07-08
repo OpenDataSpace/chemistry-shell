@@ -26,8 +26,9 @@ package org.apache.chemistry.shell.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +54,15 @@ public class SimplePropertyManager {
 		if (p == null) {
 			return "[null]";
 		}
-		Serializable val = p.getValue();
-		return val != null ? val.toString() : "[null]";
+		Object val = p.getValue();
+		if (val instanceof Calendar) {
+			Calendar cal = (Calendar) val;
+			SimpleDateFormat df = new SimpleDateFormat();
+			return df.format(cal.getTime());
+
+		} else {
+			return val != null ? val.toString() : "[null]";
+		}
 	}
 
 	public void setProperty(String name, String value) throws Exception {
@@ -68,8 +76,19 @@ public class SimplePropertyManager {
 
 		for (Property<?> prop : props) {
 			Object value = prop.getValue();
+			String valueAsString;
+			if (value instanceof Calendar) {
+				Calendar cal = (Calendar) value;
+				SimpleDateFormat df = new SimpleDateFormat();
+				valueAsString = df.format(cal.getTime());
+			} else if (value != null) {
+				valueAsString = value.toString();
+			} else {
+				valueAsString = "[null]";
+			}
+
 			Console.getDefault().println(
-					prop.getId() + " = " + (value != null ? value : "[null]"));
+					prop.getId() + " = " + valueAsString);
 		}
 	}
 
