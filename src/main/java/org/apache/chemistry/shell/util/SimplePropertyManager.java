@@ -28,10 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,13 +41,6 @@ import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.CommandException;
 
 public class SimplePropertyManager {
-
-	private final class PropertyComparator implements Comparator<Property<?>> {
-
-		public int compare(Property<?> p1, Property<?> p2) {
-			return p1.getId().compareTo(p2.getId());
-		}
-	}
 
 	protected final CmisObject item;
 
@@ -74,9 +64,7 @@ public class SimplePropertyManager {
 	}
 
 	public void dumpProperties() {
-		List<Property<?>> props = new LinkedList<Property<?>>(
-				item.getProperties());
-		Collections.sort(props, new PropertyComparator());
+		List<Property<?>> props = item.getProperties();
 
 		for (Property<?> prop : props) {
 			Object value = prop.getValue();
