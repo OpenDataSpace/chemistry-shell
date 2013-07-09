@@ -24,11 +24,11 @@
 
 package org.apache.chemistry.shell.jline;
 
-import jline.SimpleCompletor;
+import jline.console.completer.StringsCompleter;
 
 import org.apache.chemistry.shell.command.Command;
 
-public class ParameterNameCompletor extends SimpleCompletor {
+public class ParameterNameCompletor extends StringsCompleter {
 
     public ParameterNameCompletor(Command cmd) {
         super(cmd.getSyntax().getParameterKeys());

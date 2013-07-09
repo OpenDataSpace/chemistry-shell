@@ -26,9 +26,10 @@ package org.apache.chemistry.shell.jline;
 
 import java.io.IOException;
 
-import jline.CandidateListCompletionHandler;
-import jline.CompletionHandler;
-import jline.ConsoleReader;
+
+//import jline.console.completer.CandidateListCompletionHandler;
+//import jline.console.completer.CompletionHandler;
+import jline.console.ConsoleReader;
 
 import org.apache.chemistry.shell.app.Application;
 import org.apache.chemistry.shell.app.Console;
@@ -46,11 +47,13 @@ public class JLineConsole extends Console {
         }
         JLineConsole.instance = this;
         console = new ConsoleReader();
-        CompletionHandler ch = console.getCompletionHandler();
-        if (ch instanceof CandidateListCompletionHandler) {
-            ((CandidateListCompletionHandler) ch).setAlwaysIncludeNewline(false);
-        }
+//        CompletionHandler ch = console.getCompletionHandler();
+//        if (ch instanceof CandidateListCompletionHandler) {
+//            ((CandidateListCompletionHandler) ch).setAlwaysIncludeNewline(false);
+//        }
         ColorHelper.enable();
+        	
+        
     }
 
     public ConsoleReader getReader() {
@@ -68,7 +71,7 @@ public class JLineConsole extends Console {
         } catch (ExitException e) {
             return false;
         } catch (CommandException e) {
-            console.printString(e.getMessage());
+            console.print(e.getMessage());
         }
         return true;
     }
@@ -76,9 +79,9 @@ public class JLineConsole extends Console {
     @Override
     public void start(Application app) throws IOException {
         super.start(app);
-        console.setDefaultPrompt("|> ");
+        console.setPrompt("|> ");
         // register completors
-        console.addCompletor(new CompositeCompletor(this, app.getCommandRegistry()));
+        console.addCompleter(new CompositeCompletor(this, app.getCommandRegistry()));
         String line = console.readLine();
         while (line != null) {
             line = line.trim();
@@ -94,8 +97,8 @@ public class JLineConsole extends Console {
             }
             line = console.readLine();
         }
-        console.printString("Bye");
-        console.printNewline();
+        console.print("Bye");
+        console.println();
     }
 
     @Override
@@ -110,16 +113,16 @@ public class JLineConsole extends Console {
             if (path == null) {
                 path = "/";
             }
-            console.setDefaultPrompt("|"+app.getHost()+":"+path+"> ");
+            console.setPrompt("|"+app.getHost()+":"+path+"> ");
         } else {
-            console.setDefaultPrompt("|> ");
+            console.setPrompt("|> ");
         }
     }
 
     @Override
     public void println() throws IOException {
-        console.flushConsole();
-        console.printNewline();
+        console.flush();
+        console.println();;
     }
 
 }

@@ -24,35 +24,34 @@
 
 package org.apache.chemistry.shell.jline;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jline.ArgumentCompletor;
-import jline.Completor;
-import jline.CursorBuffer;
-import jline.FileNameCompletor;
-import jline.ArgumentCompletor.WhitespaceArgumentDelimiter;
+import jline.console.completer.ArgumentCompleter;
+import jline.console.completer.Completer;
+import jline.console.CursorBuffer;
+import jline.console.completer.FileNameCompleter;
+import jline.console.completer.ArgumentCompleter.WhitespaceArgumentDelimiter;
 
 import org.apache.chemistry.shell.command.Command;
 import org.apache.chemistry.shell.command.CommandRegistry;
 import org.apache.chemistry.shell.command.CommandToken;
 
-public class CompositeCompletor implements Completor {
+public class CompositeCompletor implements Completer {
 
     private final CommandRegistry registry;
     private final CommandCompletor completor;
     private final JLineConsole console;
-    private final Map<String, Completor> completors = new HashMap<String, Completor>();
-    private final Map<String,Completor> paramCompletors = new HashMap<String, Completor>();
+    private final Map<String, Completer> completors = new HashMap<String, Completer>();
+    private final Map<String,Completer> paramCompletors = new HashMap<String, Completer>();
 
     public CompositeCompletor(JLineConsole console, CommandRegistry registry) {
         this.registry = registry;
         this.console = console;
         completor = new CommandCompletor(registry);
         completors.put("command", completor);
-        completors.put("file", new FileNameCompletor());
+        completors.put("file", new FileNameCompleter());
         completors.put("dir", new DirectoryCompletor());
         completors.put("item", new ContextItemCompletor());
 
@@ -62,7 +61,7 @@ public class CompositeCompletor implements Completor {
         //completors.put("class", new ClassNameCompletor());
     }
 
-    public void setCompletor(String name, Completor completor) {
+    public void setCompletor(String name, Completer completor) {
         completors.put(name, completor);
     }
 
@@ -70,9 +69,10 @@ public class CompositeCompletor implements Completor {
         completors.remove(name);
     }
 
-    public int complete(String buffer, int cursor, List candidates) {
+    @SuppressWarnings("unused")
+	public int complete(String buffer, int cursor, List<CharSequence> candidates) {
         CursorBuffer buf = console.getReader().getCursorBuffer();
-        ArgumentCompletor.ArgumentList list = new WhitespaceArgumentDelimiter().delimit(
+        ArgumentCompleter.ArgumentList list = new WhitespaceArgumentDelimiter().delimit(
                 buffer, cursor);
         String[] args = list.getArguments();
         String argText = list.getCursorArgument();
@@ -102,7 +102,7 @@ public class CompositeCompletor implements Completor {
             if (cmd == null) {
                 return -1; // no such command
             }
-            Completor comp = null;
+            Completer comp = null;
             // get previous token and test if it requires a value
             if (argIndex > 1) { // if argIndex is 1 the previous is the command token if 0 then there is no previous
                 CommandToken token = cmd.getSyntax().getToken(args[argIndex-1]);

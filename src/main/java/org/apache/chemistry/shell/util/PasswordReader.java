@@ -23,53 +23,25 @@
  */
 package org.apache.chemistry.shell.util;
 
-import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-/**
- * In java 6 there is direct support for reading passwords form a console
- * <pre>
- *  if ((cons = System.console()) != null &&
- *    (passwd = cons.readPassword("[%s]", "Password:")) != null) {
- *    ...
- *  }
- * </pre>
- * This can be for java &lt; 6.
- * <p>
- * A separate thread is used to send to the console the backspace character to erase the last-typed character.
- */
 public class PasswordReader {
 
     private PasswordReader() {
     }
 
     public static String read() throws IOException {
-        ConsoleEraser consoleEraser = new ConsoleEraser();
         System.out.print("Password:  ");
-        BufferedReader stdin = new BufferedReader(new
-                InputStreamReader(System.in));
-        consoleEraser.start();
-        String pass = stdin.readLine();
-        consoleEraser.halt();
-        System.out.print("\b");
+        String pass = "";
+        Console cons;
+        char[] passwd;
+        if ((cons = System.console()) != null &&
+            (passwd = cons.readPassword()) != null) {
+            pass = new String(passwd);
+            java.util.Arrays.fill(passwd, ' ');
+        }
         return pass;
-    }
-
-    static class ConsoleEraser extends Thread {
-
-        private boolean running = true;
-
-        @Override
-        public void run() {
-            while (running) {
-                System.out.print("\b ");
-            }
-        }
-
-        public synchronized void halt() {
-            running = false;
-        }
     }
 
 }

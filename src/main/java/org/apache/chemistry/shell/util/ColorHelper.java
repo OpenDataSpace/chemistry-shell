@@ -32,8 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import jline.ANSIBuffer;
-
 /**
  * An utility class to add ANSI colors to objects in folder listings.
  * <p>
@@ -136,8 +134,15 @@ public class ColorHelper {
         if (!supportsColor()) {
             return name;
         }
-        ANSIBuffer buf = new ANSIBuffer();
-        return buf.attrib(name, color).toString();
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(attrib(color));
+        buffer.append(name);
+        buffer.append(attrib(OFF));
+        return buffer.toString();
+    }
+    
+    public static String attrib(final int attr) {
+        return ESC + "[" + attr + "m";
     }
 
     public static String blue(String name) {

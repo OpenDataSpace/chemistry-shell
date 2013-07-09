@@ -27,13 +27,13 @@ package org.apache.chemistry.shell.jline;
 import java.io.File;
 import java.util.List;
 
-import jline.FileNameCompletor;
+import jline.console.completer.FileNameCompleter;
 
-public class DirectoryCompletor extends FileNameCompletor {
+public class DirectoryCompletor extends FileNameCompleter {
 
     @Override
     public int matchFiles(String buffer, String translated, File[] entries,
-            List candidates) {
+            List<CharSequence> candidates) {
         if (entries == null) {
             return -1;
         }

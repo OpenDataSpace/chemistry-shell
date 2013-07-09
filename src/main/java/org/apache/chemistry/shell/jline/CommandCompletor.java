@@ -26,10 +26,10 @@ package org.apache.chemistry.shell.jline;
 
 import java.util.List;
 
-import jline.SimpleCompletor;
+import jline.console.completer.StringsCompleter;
 import org.apache.chemistry.shell.command.CommandRegistry;
 
-public class CommandCompletor extends SimpleCompletor {
+public class CommandCompletor extends StringsCompleter {
 
     protected final CommandRegistry registry;
 
@@ -39,7 +39,7 @@ public class CommandCompletor extends SimpleCompletor {
     }
 
     @Override
-    public int complete(String buffer, int cursor, List clist) {
+    public int complete(String buffer, int cursor, List<CharSequence> clist) {
         return super.complete(buffer, cursor, clist);
     }
 

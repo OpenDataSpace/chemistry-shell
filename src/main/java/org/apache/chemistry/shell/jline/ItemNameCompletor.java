@@ -26,14 +26,14 @@ package org.apache.chemistry.shell.jline;
 
 import java.util.List;
 
-import jline.Completor;
+import jline.console.completer.Completer;
 
 import org.apache.chemistry.shell.util.Path;
 
 /**
  * Auto-completes remote item names.
  */
-public class ItemNameCompletor implements Completor {
+public class ItemNameCompletor implements Completer {
 
     private final JLineConsole console;
 

@@ -26,15 +26,15 @@ package org.apache.chemistry.shell.jline;
 
 import java.util.List;
 
-import jline.Completor;
+import jline.console.completer.Completer;
 
 import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.util.Path;
 
-public class ContextItemCompletor implements Completor {
+public class ContextItemCompletor implements Completer {
 
-    protected void collectNames(String[] keys, String prefix, List candidates) {
+    protected void collectNames(String[] keys, String prefix, List<CharSequence> candidates) {
         for (String key : keys) {
             if (key.startsWith(prefix)) {
                 key = key.replace(" ", "\\ ");
@@ -43,7 +43,7 @@ public class ContextItemCompletor implements Completor {
         }
     }
 
-    public int complete(String buffer, int cursor, List candidates) {
+    public int complete(String buffer, int cursor, List<CharSequence> candidates) {
         if (buffer == null) {
             buffer = "";
         }
