@@ -27,8 +27,10 @@ package org.apache.chemistry.shell.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,7 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
+import org.apache.chemistry.opencmis.commons.enums.PropertyType;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.CommandException;
@@ -66,8 +69,21 @@ public class SimplePropertyManager {
 	}
 
 	public void setProperty(String name, String value) throws Exception {
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put(name, value);
+		Map<String, Object> properties = new HashMap<String, Object>();
+		Property<?> p = item.getProperty(name);
+		if(PropertyType.DATETIME == p.getType()){
+			try {
+				SimpleDateFormat format = new SimpleDateFormat();
+				Date date = format.parse(value);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				properties.put(name, cal);
+			} catch (ParseException ex) {
+				properties.put(name, value);
+			}
+		} else {
+			properties.put(name, value);
+		}
 		item.updateProperties(properties);
 	}
 
@@ -87,8 +103,7 @@ public class SimplePropertyManager {
 				valueAsString = "[null]";
 			}
 
-			Console.getDefault().println(
-					prop.getId() + " = " + valueAsString);
+			Console.getDefault().println(prop.getId() + " = " + valueAsString);
 		}
 	}
 
