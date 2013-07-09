@@ -2,7 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  <profiles>
+    <profile>
+      <id>nuxeo</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <org.apache.chemistry.opencmis.binding.atompub.url>http://cmis.demo.nuxeo.org/nuxeo/atom/cmis/</org.apache.chemistry.opencmis.binding.atompub.url>
+        <org.apache.chemistry.opencmis.user>Administrator</org.apache.chemistry.opencmis.user>
+        <org.apache.chemistry.opencmis.password>Administrator</org.apache.chemistry.opencmis.password>
+        <org.apache.chemistry.opencmis.session.repository.id>Nuxeo Repository default</org.apache.chemistry.opencmis.session.repository.id>
+      </properties>
+    </profile>
+  </profiles>
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
@@ -100,6 +117,27 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <systemPropertyVariables>
+            <org.apache.chemistry.opencmis.binding.atompub.url>${org.apache.chemistry.opencmis.binding.atompub.url}</org.apache.chemistry.opencmis.binding.atompub.url>
+            <org.apache.chemistry.opencmis.binding.browser.url>${org.apache.chemistry.opencmis.binding.browser.url}</org.apache.chemistry.opencmis.binding.browser.url>
+            <org.apache.chemistry.opencmis.password>${org.apache.chemistry.opencmis.password}</org.apache.chemistry.opencmis.password>
+            <org.apache.chemistry.opencmis.user>${org.apache.chemistry.opencmis.user}</org.apache.chemistry.opencmis.user>
+            <org.apache.chemistry.opencmis.session.repository.id>${org.apache.chemistry.opencmis.session.repository.id}</org.apache.chemistry.opencmis.session.repository.id>
+          </systemPropertyVariables>
+        </configuration>
       </plugin>
     </plugins>
   </build>
