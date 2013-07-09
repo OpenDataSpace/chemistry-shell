@@ -54,12 +54,18 @@ public class ChemistryApp extends AbstractApplication {
 
     private SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
 	private List<Repository> repos;
+	private BindingType bindingType;
 
 	public List<Repository> getRepositories() {
 		return repos;
 	}
 
-	public ChemistryApp() {
+	public ChemistryApp(){
+		this(BindingType.ATOMPUB);
+	}
+	
+	public ChemistryApp(BindingType bindingType) {
+		this.bindingType = bindingType;
         registry.registerCommand(new DumpTree());
         registry.registerCommand(new SetProp());
         registry.registerCommand(new PropGet());
@@ -79,10 +85,16 @@ public class ChemistryApp extends AbstractApplication {
     	Map<String, String> parameters = new HashMap<String, String>();
     	parameters.put(SessionParameter.USER, username);
     	parameters.put(SessionParameter.PASSWORD, new String(password));
-
     	// connection settings
-    	parameters.put(SessionParameter.ATOMPUB_URL, serverUrl.toExternalForm());
-    	parameters.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
+    	switch (bindingType) {
+		case BROWSER:
+	    	parameters.put(SessionParameter.BROWSER_URL, serverUrl.toExternalForm());
+	    	break;
+		default:
+	    	parameters.put(SessionParameter.ATOMPUB_URL, serverUrl.toExternalForm());
+			break;
+		}
+    	parameters.put(SessionParameter.BINDING_TYPE, bindingType.value());
     	this.repos = sessionFactory.getRepositories(parameters);
     }
 
