@@ -74,15 +74,18 @@ public class Console {
         return lastResult;
     }
 
-    public void runCommand(String line) throws Exception {
+    public String runCommand(String line) throws Exception {
         CommandLine commandLine = parseCommandLine(app.getCommandRegistry(), line);
+        String result;
         lastResult = buffer.toString();
         buffer = new StringBuffer();
         commandLine.run(app);
+        result = buffer.toString();
         if ("match".equals(commandLine.getCommand().getName())) {
             // Keep previous result in case we have several 'match' commands
             buffer = new StringBuffer(lastResult);
         }
+        return result;
     }
 
     public static CommandLine parseCommandLine(CommandRegistry reg, String line) throws CommandException {
