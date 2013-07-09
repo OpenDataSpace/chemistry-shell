@@ -83,7 +83,7 @@ public class Path implements Serializable {
         flags = path.flags;
     }
 
-
+    @SuppressWarnings("fallthrough")
     private void init(String path) {
         List<String> segments = new ArrayList<String>();
         int len = path.length();
