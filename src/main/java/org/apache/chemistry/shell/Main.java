@@ -31,6 +31,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.ExitException;
@@ -45,6 +46,7 @@ public class Main {
     boolean batchMode;
     boolean execMode;
     boolean testMode;
+    boolean useJSONBinding = false;
     String command;
     private ChemistryApp app;
 
@@ -52,13 +54,13 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-    	Runtime runtime = Runtime.getRuntime();
-    	runtime.addShutdownHook(new Thread(new Runnable() {
-			
-			public void run() {
-				Console.getDefault().println("Bye.");
-			}
-		}));
+//    	Runtime runtime = Runtime.getRuntime();
+//    	runtime.addShutdownHook(new Thread(new Runnable() {
+//			
+//			public void run() {
+//				Console.getDefault().println("Bye.");
+//			}
+//		}));
         Main main = new Main();
         main.parseArgs(args);
         main.run();
@@ -103,9 +105,11 @@ public class Main {
                     System.exit(0);
                 } else if (!arg.startsWith("-")) {
                     url = arg;
-                } else {
-                    // unknown option
-                }
+                } else if ("-j".equals(arg)) { // use json binding
+                	useJSONBinding = true;
+				} else {
+					// unknown option
+				}
             }
             if (username != null && password == null) {
                 password = PasswordReader.read();
@@ -117,7 +121,11 @@ public class Main {
     }
 
     public void run() throws Exception {
-        app = new ChemistryApp();
+		if (this.useJSONBinding) {
+			app = new ChemistryApp(BindingType.BROWSER);
+		} else {
+			app = new ChemistryApp();
+		}
         if (username != null){
             app.login(username, password == null ? new char[0] : password.toCharArray());
         }

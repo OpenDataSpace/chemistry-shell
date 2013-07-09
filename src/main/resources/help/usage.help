@@ -30,6 +30,8 @@ OPTIONS
               used conjointly with batch mode), cmissh will
               fail as soon as a command reports an error.
 
+      -j      Enables CMIS JSON binding for the repository.
+
       -u username
               Specifies username to connect to server.
 
