@@ -45,6 +45,7 @@ public class Ls extends Command {
         Context ctx;
         if (param == null) {
             ctx = app.getContext();
+            ctx.reset();
             for (String line : ctx.ls()) {
                 println(line);
             }
