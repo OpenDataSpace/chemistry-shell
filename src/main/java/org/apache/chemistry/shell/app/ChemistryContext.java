@@ -32,6 +32,7 @@ import java.util.Map;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.shell.util.ColorHelper;
 import org.apache.chemistry.shell.util.Path;
@@ -42,23 +43,25 @@ public class ChemistryContext extends AbstractContext {
 
 	protected final Session session;
 	protected final CmisObject entry;
+	protected final Repository repo;
 
 	protected List<String> keys;
 	protected List<String> ls;
 	protected Map<String, CmisObject> children;
 
 	public ChemistryContext(ChemistryApp app, Path path, Session session,
-			CmisObject entry) {
+			CmisObject entry, Repository repo) {
 		super(app, path);
 		this.session = session;
 		this.entry = entry;
+		this.repo = repo;
 	}
 
 	@Override
 	public ChemistryApp getApplication() {
 		return (ChemistryApp) app;
 	}
-	
+
 	public Session getSession() {
 		return session;
 	}
@@ -68,7 +71,7 @@ public class ChemistryContext extends AbstractContext {
 		CmisObject e = children.get(name);
 		if (e != null) {
 			return new ChemistryContext((ChemistryApp) app, path.append(name),
-					session, e);
+					session, e, repo);
 		}
 		return null;
 	}
@@ -127,7 +130,12 @@ public class ChemistryContext extends AbstractContext {
 	}
 
 	public String id() {
-		return "Object " + entry.getId() + " of type " + entry.getType().getId();
+		return "Object " + entry.getId() + " of type "
+				+ entry.getType().getId();
+	}
+
+	public final Repository getRepository() {
+		return repo;
 	}
 
 }

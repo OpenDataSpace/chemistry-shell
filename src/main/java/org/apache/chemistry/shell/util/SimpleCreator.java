@@ -27,32 +27,38 @@ package org.apache.chemistry.shell.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.VersioningState;
 
 public class SimpleCreator {
 
-    protected final Folder folder;
+	protected final Folder folder;
 
-    public SimpleCreator(Folder folder) {
-        this.folder = folder;
-    }
+	public SimpleCreator(Folder folder) {
+		this.folder = folder;
+	}
 
-    public void createFolder(String typeName, String name) throws Exception {
-    	// (minimal set: name and object type id)
-    	Map<String, Object> properties = new HashMap<String, Object>();
-    	properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
-    	properties.put(PropertyIds.NAME, name);
-        folder.createFolder(properties);
-    }
+	public void createFolder(String typeName, String name) throws Exception {
+		// (minimal set: name and object type id)
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
+		properties.put(PropertyIds.NAME, name);
+		folder.createFolder(properties);
+	}
 
-    public void createFile(String typeName, String name) throws Exception {
-    	// (minimal set: name and object type id)
-    	Map<String, Object> properties = new HashMap<String, Object>();
-    	properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
-    	properties.put(PropertyIds.NAME, name);
-        folder.createDocument(properties, null, VersioningState.MAJOR);
-    }
+	public Document createFile(String typeName, String name, ContentStream stream) throws Exception {
+		// (minimal set: name and object type id)
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
+		properties.put(PropertyIds.NAME, name);
+		return folder.createDocument(properties, stream, VersioningState.NONE);
+	}
+	
+	public Document createFile(String typeName, String name) throws Exception {
+		return createFile(typeName, name, null);
+	}
 
 }

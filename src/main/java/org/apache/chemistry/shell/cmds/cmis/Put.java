@@ -26,9 +26,11 @@ package org.apache.chemistry.shell.cmds.cmis;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigInteger;
 
-import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.data.ContentStream;
+import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.Context;
@@ -37,53 +39,52 @@ import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.SimpleCreator;
-import org.apache.chemistry.shell.util.SimplePropertyManager;
 
-@Cmd(syntax="put [-t|--type:*] source:file [target:item]", synopsis="Uploads the stream of the target document")
+@Cmd(syntax = "put [-t|--type:*] source:file [target:item]", synopsis = "Uploads the stream of the target document")
 public class Put extends ChemistryCommand {
 
-    @Override
-    protected void execute(ChemistryApp app, CommandLine cmdLine)
-            throws Exception {
+	@Override
+	protected void execute(ChemistryApp app, CommandLine cmdLine)
+			throws Exception {
 
-        String source = cmdLine.getParameterValue("source");
-        String target = cmdLine.getParameterValue("target");
-        if (target == null) {
-            target = new Path(source).getLastSegment();
-        }
-        String typeName = cmdLine.getParameterValue("-t");
-        if (typeName == null) {
-            typeName = "cmis:document";
-        }
+		String source = cmdLine.getParameterValue("source");
+		String target = cmdLine.getParameterValue("target");
+		if (target == null) {
+			target = new Path(source).getLastSegment();
+		}
+		String typeName = cmdLine.getParameterValue("-t");
+		if (typeName == null) {
+			typeName = "cmis:document";
+		}
 
-        Context targetCtx = app.resolveContext(new Path(target));
-
-        // Create document if it doesn't exist
-        if (targetCtx == null) {
-            Context currentCtx = app.getContext();
-            Folder folder =  currentCtx.as(Folder.class);
-            if (folder != null) {
-                new SimpleCreator(folder).createFile(typeName, target);
-                currentCtx.reset();
-                targetCtx = app.resolveContext(new Path(target));
-            }
-        }
-        if (targetCtx == null) {
-            throw new CommandException("Cannot create target document");
-        }
-
-        Document obj = targetCtx.as(Document.class);
-        if (obj == null) {
-            throw new CommandException("Your target must be a document");
-        }
-
-        File file = app.resolveFile(source);
-        FileInputStream in = new FileInputStream(file);
-        try {
-            new SimplePropertyManager(obj).setStream(in, file.length(), file.getName());
-        } finally {
-            in.close();
-        }
-    }
+		Context targetCtx = app.resolveContext(new Path(target));
+		// Create document if it doesn't exist
+		if (targetCtx == null) {
+			Context currentCtx = app.getContext();
+			Folder folder = currentCtx.as(Folder.class);
+			if (folder != null) {
+				File file = app.resolveFile(source);
+				FileInputStream in = new FileInputStream(file);
+				try {
+//					if (currentCtx instanceof ChemistryContext) {
+//						ChemistryContext c = (ChemistryContext) currentCtx;
+//
+//					}
+					ContentStream stream = new ContentStreamImpl(
+							file.getName(), BigInteger.valueOf(file.length()),
+							"text/plain", in);
+					new SimpleCreator(folder).createFile(typeName, target,
+							stream);
+				} finally {
+					in.close();
+				}
+				currentCtx.reset();
+				targetCtx = app.resolveContext(new Path(target));
+			}
+		}
+		if (targetCtx == null) {
+			throw new CommandException("Cannot create target document");
+		}
+	}
 
 }

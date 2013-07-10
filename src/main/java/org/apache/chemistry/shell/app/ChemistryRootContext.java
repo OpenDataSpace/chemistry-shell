@@ -73,7 +73,7 @@ public class ChemistryRootContext extends AbstractContext {
         Session session = repo.createSession();
         CmisObject entry = session.getRootFolder();
         return new ChemistryContext( app, path.append(name),
-                session, entry);
+                session, entry, repo);
     }
 
     public String[] ls() {

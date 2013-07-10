@@ -30,7 +30,7 @@ OPTIONS
               used conjointly with batch mode), cmissh will
               fail as soon as a command reports an error.
 
-      -j      Enables CMIS JSON binding for the repository.
+      -j      Enables CMIS Browser binding for the repository.
 
       -u username
               Specifies username to connect to server.
@@ -42,7 +42,8 @@ SEE ALSO
 HISTORY
       cmissh was written by Bogdan Stefanescu (bs@nuxeo.com), then
       Stefane Fermigier (sf@nuxeo.com) and Florent Guillaume
-      (fg@nuxeo.com).
+      (fg@nuxeo.com). Ported to JLine2 and Apache Chemistry 0.9.0.37
+      by GRAU DATA AG (till.lorentzen@graudata.com).
 
       cmissh is based on the Apache Chemistry code.
 
