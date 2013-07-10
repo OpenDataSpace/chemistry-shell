@@ -27,6 +27,7 @@ package org.apache.chemistry.shell;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -40,168 +41,185 @@ import org.apache.chemistry.shell.util.PasswordReader;
 
 public class Main {
 
-    String username;
-    String password;
-    String url;
-    boolean batchMode;
-    boolean execMode;
-    boolean testMode;
-    boolean useJSONBinding = false;
-    String command;
-    private ChemistryApp app;
+	String username;
+	String password;
+	String url;
+	boolean batchMode;
+	boolean execMode;
+	boolean testMode;
+	boolean useJSONBinding = false;
+	String command;
+	private ChemistryApp app;
 
-    private Main() {
-    }
+	private Main() {
+	}
 
-    public static void main(String[] args) throws Exception {
-//    	Runtime runtime = Runtime.getRuntime();
-//    	runtime.addShutdownHook(new Thread(new Runnable() {
-//			
-//			public void run() {
-//				Console.getDefault().println("Bye.");
-//			}
-//		}));
-        Main main = new Main();
-        main.parseArgs(args);
-        main.run();
-    }
+	public static void main(String[] args) throws Exception {
+		Main main = new Main();
+		main.parseArgs(args);
+		main.run();
+	}
 
-    public void parseArgs(String[] args) throws IOException {
-        if (args.length > 0) {
-            for (int i=0; i<args.length; i++) {
-                String arg = args[i];
-                if ("-u".equals(arg)) {
-                    if (++i == args.length) { // username
-                        error("Invalid option -u without value. Username required.");
-                    }
-                    username = args[i];
-                } else if ("-p".equals(arg)) { // password
-                    if (++i == args.length) { // username
-                        error("Invalid option -p without value. Password required.");
-                    }
-                    password = args[i];
-                } else if ("-t".equals(arg)) { // test mode
-                    testMode = true;
-                } else if ("-e".equals(arg)) { // execute mode
-                    // execute one command
-                    execMode = true;
-                    StringBuilder buf = new StringBuilder();
-                    for (i++; i<args.length; i++) {
-                        buf.append(args[i]).append(" ");
-                    }
-                    command = buf.toString();
-                    break;
-                } else if ("-b".equals(arg)) { // batch mode
-                    // execute commands in the given file or if no specified read from stdin
-                    batchMode = true;
-                    if (++i < args.length) {
-                        // read commands from a file
-                        command = args[i];
-                    }
-                    break;
-                } else if ("-h".equals(arg)) { // help
-                    // execute help command
-                    usage();
-                    System.exit(0);
-                } else if (!arg.startsWith("-")) {
-                    url = arg;
-                } else if ("-j".equals(arg)) { // use json binding
-                	useJSONBinding = true;
+	public void parseArgs(String[] args) throws IOException {
+		if (args.length > 0) {
+			for (int i = 0; i < args.length; i++) {
+				String arg = args[i];
+				if ("-u".equals(arg)) { // username
+					if (++i == args.length) {
+						error("Invalid option -u without value. Username required.");
+					}
+					username = args[i];
+				} else if ("-p".equals(arg)) { // password
+					if (++i == args.length) {
+						error("Invalid option -p without value. Password required.");
+					}
+					password = args[i];
+				} else if ("-t".equals(arg)) { // test mode
+					testMode = true;
+				} else if ("-e".equals(arg)) { // execute mode
+					// execute one command
+					execMode = true;
+					StringBuilder buf = new StringBuilder();
+					for (i++; i < args.length; i++) {
+						buf.append(args[i]).append(" ");
+					}
+					command = buf.toString();
+					break;
+				} else if ("-b".equals(arg)) { // batch mode
+					// execute commands in the given file or if no specified
+					// read from stdin
+					batchMode = true;
+					if (++i < args.length) {
+						// read commands from a file
+						command = args[i];
+					}
+					break;
+				} else if ("-h".equals(arg)) { // help
+					// execute help command
+					usage();
+					System.exit(0);
+				} else if (!arg.startsWith("-")) {
+					url = arg;
+				} else if ("-j".equals(arg)) { // use json binding
+					useJSONBinding = true;
 				} else {
-					// unknown option
+					System.err.println("Skipping unknown argument: " + arg);
 				}
-            }
-            if (username != null && password == null) {
-                password = PasswordReader.read();
-            }
-            if (url != null && !url.contains("://")) {
-                url = "http://"+url;
-            }
-        }
-    }
+			}
 
-    public void run() throws Exception {
+			if (url != null && !url.contains("://")) {
+				url = "http://" + url;
+				try {
+					URL u = new URL(url);
+					if (username == null) {
+						String userInfo = u.getUserInfo();
+						int p = userInfo.indexOf(':');
+						if (p > 0) {
+							username = userInfo.substring(0, p);
+						}
+						if (password == null && p < userInfo.length() - 1) {
+							password = userInfo.substring(p + 1);
+						}
+					}
+				} catch (MalformedURLException e) {
+					System.err.println("Malformed URL: "
+							+ e.getLocalizedMessage());
+					System.exit(1);
+				}
+			}
+			if (username == null) {
+				username = System.console().readLine("User: ");
+			}
+			if (username != null && password == null) {
+				password = PasswordReader.read();
+			}
+		}
+	}
+
+	public void run() throws Exception {
 		if (this.useJSONBinding) {
 			app = new ChemistryApp(BindingType.BROWSER);
 		} else {
 			app = new ChemistryApp();
 		}
-        if (username != null){
-            app.login(username, password == null ? new char[0] : password.toCharArray());
-        }
-        if (url != null) {
-            app.connect(url);
-        }
+		if (username != null) {
+			app.login(username,
+					password == null ? new char[0] : password.toCharArray());
+		}
+		if (url != null) {
+			app.connect(url);
+		}
 
-        if (execMode) {
-            runInExecMode();
-        } else if (batchMode) {
-            runInBatchMode();
-        } else {
-            runInInteractiveMode();
-        }
-    }
+		if (execMode) {
+			runInExecMode();
+		} else if (batchMode) {
+			runInBatchMode();
+		} else {
+			runInInteractiveMode();
+		}
+	}
 
-    private void runInExecMode() throws Exception {
-        Console.setDefault(new Console());
-        Console.getDefault().start(app);
-        Console.getDefault().runCommand(command);
-    }
+	private void runInExecMode() throws Exception {
+		Console.setDefault(new Console());
+		Console.getDefault().start(app);
+		Console.getDefault().runCommand(command);
+	}
 
-    private void runInBatchMode() throws IOException {
-        Console.setDefault(new Console());
-        Console.getDefault().start(app);
-        List<String> cmds;
-        if (command == null) {
-            cmds = IOUtils.readLines(System.in);
-        } else {
-            cmds = IOUtils.readLines(new FileInputStream(new File(command)));
-        }
-        for (String cmd : cmds) {
-            // Ignore empty lines / comments
-            if (cmd.length() == 0 || cmd.startsWith("#")) {
-                continue;
-            }
-            Console.getDefault().println("Running: " + cmd);
-            try {
-                Console.getDefault().runCommand(cmd);
-            } catch (ExitException e) {
-                Console.getDefault().println("Bye.");
-                return;
-            } catch (Exception e) {
-                Console.getDefault().error(e.getMessage());
-                if (testMode) {
-                    e.printStackTrace();
-                    Console.getDefault().println("Exiting on error.");
-                    System.exit(1);
-                    return;
-                }
-            }
-        }
-        Console.getDefault().println("Done.");
-    }
+	private void runInBatchMode() throws IOException {
+		Console.setDefault(new Console());
+		Console.getDefault().start(app);
+		List<String> cmds;
+		if (command == null) {
+			cmds = IOUtils.readLines(System.in);
+		} else {
+			cmds = IOUtils.readLines(new FileInputStream(new File(command)));
+		}
+		for (String cmd : cmds) {
+			// Ignore empty lines / comments
+			if (cmd.length() == 0 || cmd.startsWith("#")) {
+				continue;
+			}
+			Console.getDefault().println("Running: " + cmd);
+			try {
+				Console.getDefault().runCommand(cmd);
+			} catch (ExitException e) {
+				Console.getDefault().println("Bye.");
+				return;
+			} catch (Exception e) {
+				Console.getDefault().error(e.getMessage());
+				if (testMode) {
+					e.printStackTrace();
+					Console.getDefault().println("Exiting on error.");
+					System.exit(1);
+					return;
+				}
+			}
+		}
+		Console.getDefault().println("Done.");
+	}
 
-    private void runInInteractiveMode() {
-        try {
-            //TODO use user profiles to setup console like prompt and default service to cd in
-            Console.setDefault(new JLineConsole());
-            Console.getDefault().println(
-                    "CMIS Shell by Nuxeo (www.nuxeo.com). Type 'help' for help.");
-            Console.getDefault().start(app);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	private void runInInteractiveMode() {
+		try {
+			// TODO use user profiles to setup console like prompt and default
+			// service to cd in
+			JLineConsole con = new JLineConsole();
+			Console.setDefault(con);
+			con.println("CMIS Shell by Nuxeo (www.nuxeo.com). Type 'help' for help.");
+			con.start(app);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    static void error(String msg) {
-        System.err.println(msg);
-        System.exit(1);
-    }
+	static void error(String msg) {
+		System.err.println(msg);
+		System.exit(1);
+	}
 
-    static void usage() throws IOException {
-        URL url = Main.class.getResource("/help/usage.help");
-        String help = IOUtils.toString(url.openStream());
-        System.out.print(help);
-    }
+	static void usage() throws IOException {
+		URL url = Main.class.getResource("/help/usage.help");
+		String help = IOUtils.toString(url.openStream());
+		System.out.print(help);
+	}
 
 }

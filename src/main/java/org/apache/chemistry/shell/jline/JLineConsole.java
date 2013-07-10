@@ -26,10 +26,11 @@ package org.apache.chemistry.shell.jline;
 
 import java.io.IOException;
 
-
 //import jline.console.completer.CandidateListCompletionHandler;
 //import jline.console.completer.CompletionHandler;
 import jline.console.ConsoleReader;
+//import jline.console.completer.CandidateListCompletionHandler;
+//import jline.console.completer.CompletionHandler;
 
 import org.apache.chemistry.shell.app.Application;
 import org.apache.chemistry.shell.app.Console;
@@ -39,90 +40,94 @@ import org.apache.chemistry.shell.util.ColorHelper;
 
 public class JLineConsole extends Console {
 
-    protected ConsoleReader console;
+	protected ConsoleReader console;
 
-    public JLineConsole() throws IOException {
-        if (JLineConsole.instance != null) {
-            throw new IllegalAccessError("Console is already instantiated");
-        }
-        JLineConsole.instance = this;
-        console = new ConsoleReader();
-//        CompletionHandler ch = console.getCompletionHandler();
-//        if (ch instanceof CandidateListCompletionHandler) {
-//            ((CandidateListCompletionHandler) ch).setAlwaysIncludeNewline(false);
-//        }
-        ColorHelper.enable();
-        	
-        
-    }
+	public JLineConsole() throws IOException {
+		if (JLineConsole.instance != null) {
+			throw new IllegalAccessError("Console is already instantiated");
+		}
+		JLineConsole.instance = this;
+		console = new ConsoleReader();
+		// CompletionHandler ch = console.getCompletionHandler();
+		// if (ch instanceof CandidateListCompletionHandler) {
+		// ((CandidateListCompletionHandler) ch).setAlwaysIncludeNewline(false);
+		// }
+		ColorHelper.enable();
 
-    public ConsoleReader getReader() {
-        return console;
-    }
+	}
 
-    /**
-     * Executes line.
-     *
-     * @return false if the users has issued an "exit" command, true otherwise
-     */
-    protected boolean execute(String line) throws Exception {
-        try {
-            runCommand(line);
-        } catch (ExitException e) {
-            return false;
-        } catch (CommandException e) {
-            console.print(e.getMessage());
-        }
-        return true;
-    }
+	public ConsoleReader getReader() {
+		return console;
+	}
 
-    @Override
-    public void start(Application app) throws IOException {
-        super.start(app);
-        console.setPrompt("|> ");
-        // register completors
-        console.addCompleter(new CompositeCompletor(this, app.getCommandRegistry()));
-        String line = console.readLine();
-        while (line != null) {
-            line = line.trim();
-            try {
-                if (line.length() > 0) {
-                    if (!execute(line)) {
-                        break;
-                    }
-                    println();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            line = console.readLine();
-        }
-        console.print("Bye");
-        console.println();
-    }
+	/**
+	 * Executes line.
+	 * 
+	 * @return false if the users has issued an "exit" command, true otherwise
+	 */
+	protected boolean execute(String line) throws Exception {
+		try {
+			runCommand(line);
+		} catch (ExitException e) {
+			return false;
+		} catch (CommandException e) {
+			console.print(e.getMessage() + System.getProperty("line.separator"));
+		}
+		return true;
+	}
 
-    @Override
-    public String promptPassword() throws IOException {
-        return console.readLine(new Character('*'));
-    }
+	@Override
+	public void start(Application app) throws IOException {
+		super.start(app);
+		updatePrompt();
+		// register completors
+		console.addCompleter(new CompositeCompletor(this, app
+				.getCommandRegistry()));
+		String line = console.readLine();
+		while (line != null) {
+			line = line.trim();
+			try {
+				if (line.length() > 0) {
+					if (!execute(line)) {
+						break;
+					}
+					// println();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			line = console.readLine();
+		}
+		console.print("Bye");
+		console.println();
+	}
 
-    @Override
-    public void updatePrompt() {
-        if (app.isConnected()) {
-            String path = app.getContext().getPath().getLastSegment();
-            if (path == null) {
-                path = "/";
-            }
-            console.setPrompt("|"+app.getHost()+":"+path+"> ");
-        } else {
-            console.setPrompt("|> ");
-        }
-    }
+	@Override
+	public String promptPassword() throws IOException {
+		String prompt = this.console.getPrompt();
+		String password = console.readLine("Password: ", new Character('\0'));
+		console.setPrompt(prompt);
+		return password;
+	}
 
-    @Override
-    public void println() throws IOException {
-        console.flush();
-        console.println();;
-    }
+	@Override
+	public void updatePrompt() {
+		if (app.isConnected()) {
+			String path = app.getContext().getPath().getLastSegment();
+			if (path == null) {
+				path = "/";
+			}
+			console.setPrompt("|" + app.getUsername() + "@" + app.getHost()
+					+ ":" + path + "> ");
+		} else {
+			console.setPrompt("|> ");
+		}
+	}
+
+	@Override
+	public void println() throws IOException {
+		console.flush();
+		console.println();
+	}
 
 }
