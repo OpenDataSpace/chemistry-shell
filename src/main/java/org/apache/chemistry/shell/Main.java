@@ -107,18 +107,25 @@ public class Main {
 				}
 			}
 
-			if (url != null && !url.contains("://")) {
-				url = "http://" + url;
+			if (url != null) {
+				if (!url.contains("://")) {
+					url = "http://" + url;
+				}
 				try {
 					URL u = new URL(url);
 					if (username == null) {
 						String userInfo = u.getUserInfo();
-						int p = userInfo.indexOf(':');
-						if (p > 0) {
-							username = userInfo.substring(0, p);
-						}
-						if (password == null && p < userInfo.length() - 1) {
-							password = userInfo.substring(p + 1);
+						if (userInfo != null) {
+							if (userInfo.contains(":")) {
+								int p = userInfo.indexOf(':');
+								username = userInfo.substring(0, p);
+								if (password == null
+										&& p < userInfo.length() - 1) {
+									password = userInfo.substring(p + 1);
+								}
+							} else {
+								username = userInfo;
+							}
 						}
 					}
 				} catch (MalformedURLException e) {

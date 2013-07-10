@@ -7,7 +7,7 @@ id
 match "^CMIS server.*"
 match -r "foobar"
 ls
-match "^default$"
+match ".*default.*"
 
 # Local command
 help
@@ -20,11 +20,11 @@ lpopd
 lcd .
 
 # Test main commands on 'default' object (Root)
-cd default
+cd "Nuxeo Repository default"
 id
 match "^Object.*of type Root$"
 ls
-match "^default-domain$"
+match "^Default domain$"
 tree
 propget .
 match "^cmis:objectTypeId = Root$"
@@ -32,22 +32,22 @@ propget . cmis:objectTypeId
 match "^Root$"
 
 # navigate around
-cd default-domain
+cd "Default domain"
 pwd
-match "^/default/default-domain$"
+match "^/Nuxeo Repository default/Default domain$"
 ls
-match "^workspaces$"
-cd workspaces
+match "^Workspaces$"
+cd Workspaces
 pwd
 ls
 cd ..
 pwd
-cd /default/default-domain/workspaces
+cd "/Nuxeo Repository default/Default domain/Workspaces"
 pushd ..
 popd
 
 # Create an object (a folder), test commands on it
-cd /default/default-domain
+cd "/Nuxeo Repository default/Default domain"
 mkdir testdir
 ls
 id testdir
@@ -59,7 +59,7 @@ match "^cmis:baseTypeId = cmis:folder$"
 propget testdir dc:title
 
 # Test mkdir more in depth
-cd /default/default-domain
+cd "/Nuxeo Repository default/Default domain"
 mkdir ./testdir1
 ls testdir1
 mkdir testdir1/../testdir2

@@ -61,16 +61,20 @@ public abstract class AbstractApplication implements Application {
 		if (userInfo != null) {
 			int p = userInfo.indexOf(':');
 			if (p < 0 || p >= userInfo.length() - 1) {
-				username = userInfo;
-				try {
-					password = PasswordReader.read().toCharArray();
-				} catch (IOException e) {
-					password = null;
-					throw new IllegalStateException(e);
-				}
+				if (username == null)
+					username = userInfo;
+				if (password == null)
+					try {
+						password = PasswordReader.read().toCharArray();
+					} catch (IOException e) {
+						password = null;
+						throw new IllegalStateException(e);
+					}
 			} else {
-				username = userInfo.substring(0, p);
-				password = userInfo.substring(p + 1).toCharArray();
+				if (username == null)
+					username = userInfo.substring(0, p);
+				if (password == null)
+					password = userInfo.substring(p + 1).toCharArray();
 			}
 		}
 		// do URL cleanup
