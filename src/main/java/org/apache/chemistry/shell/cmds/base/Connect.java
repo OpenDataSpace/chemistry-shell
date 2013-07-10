@@ -24,20 +24,52 @@
 
 package org.apache.chemistry.shell.cmds.base;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.chemistry.opencmis.commons.exceptions.CmisPermissionDeniedException;
 import org.apache.chemistry.shell.app.Application;
+import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.Command;
 import org.apache.chemistry.shell.command.CommandLine;
 
-@Cmd(syntax="connect|open url", synopsis="Open a new session")
+@Cmd(syntax = "connect|open url ", synopsis = "Open a new session")
 public class Connect extends Command {
 
-    @Override
-    public void run(Application app, CommandLine cmdLine) throws Exception {
-        String url = cmdLine.getParameterValue("url");
-        if (url != null) {
-            app.connect(url);
-        }
-    }
-
+	@Override
+	public void run(Application app, CommandLine cmdLine) throws Exception {
+		String u = cmdLine.getParameterValue("url");
+		// if parameter not found, return
+		if (u == null)
+			return;
+		try {
+			URL url = new URL(u);
+			String userInfo = url.getUserInfo();
+			if (userInfo != null) {
+				String username = "";
+				String password = "";
+				int p = userInfo.indexOf(':');
+				if (p == -1 || p == userInfo.length() - 1) {
+					username = userInfo;
+					password = Console.getDefault().promptPassword();
+					url = new URL(url.getProtocol() + "://" + username + ":"
+							+ password + "@" + url.getHost() + ":"
+							+ url.getPort() + url.getFile());
+				}
+			}
+			if (url != null) {
+				try {
+					app.connect(url);
+					Console.getDefault().updatePrompt();
+				} catch (CmisPermissionDeniedException e) {
+					Console.getDefault().error(
+							"Permission Denied: " + e.getMessage());
+				}
+			}
+		} catch (MalformedURLException e) {
+			Console.getDefault().error(
+					"malformed URL \"" + u + "\": " + e.getMessage());
+		}
+	}
 }

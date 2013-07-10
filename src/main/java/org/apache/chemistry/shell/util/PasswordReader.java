@@ -33,6 +33,7 @@ public class PasswordReader {
 
     public static String read() throws IOException {
         System.out.print("Password:  ");
+        System.out.flush();
         String pass = "";
         Console cons;
         char[] passwd;

@@ -33,6 +33,7 @@ import org.apache.chemistry.opencmis.client.api.SessionFactory;
 import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisPermissionDeniedException;
 import org.apache.chemistry.shell.cmds.cmis.Cat;
 import org.apache.chemistry.shell.cmds.cmis.CreateFile;
 import org.apache.chemistry.shell.cmds.cmis.CreateFolder;
@@ -48,11 +49,11 @@ import org.apache.chemistry.shell.cmds.cmis.SetStream;
 
 /**
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
- *
+ * 
  */
 public class ChemistryApp extends AbstractApplication {
 
-    private SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
+	private SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
 	private List<Repository> repos;
 	private BindingType bindingType;
 
@@ -60,55 +61,66 @@ public class ChemistryApp extends AbstractApplication {
 		return repos;
 	}
 
-	public ChemistryApp(){
+	public ChemistryApp() {
 		this(BindingType.ATOMPUB);
 	}
-	
+
 	public ChemistryApp(BindingType bindingType) {
 		this.bindingType = bindingType;
-        registry.registerCommand(new DumpTree());
-        registry.registerCommand(new SetProp());
-        registry.registerCommand(new PropGet());
-        registry.registerCommand(new DumpProps());
-        registry.registerCommand(new Get());
-        registry.registerCommand(new SetStream());
-        registry.registerCommand(new CreateFile());
-        registry.registerCommand(new CreateFolder());
-        registry.registerCommand(new Remove());
-        registry.registerCommand(new Cat());
-        registry.registerCommand(new Put());
-        registry.registerCommand(new Query());
-    }
+		registry.registerCommand(new DumpTree());
+		registry.registerCommand(new SetProp());
+		registry.registerCommand(new PropGet());
+		registry.registerCommand(new DumpProps());
+		registry.registerCommand(new Get());
+		registry.registerCommand(new SetStream());
+		registry.registerCommand(new CreateFile());
+		registry.registerCommand(new CreateFolder());
+		registry.registerCommand(new Remove());
+		registry.registerCommand(new Cat());
+		registry.registerCommand(new Put());
+		registry.registerCommand(new Query());
+	}
 
-    @Override
-    protected void doConnect() {
-    	Map<String, String> parameters = new HashMap<String, String>();
-    	parameters.put(SessionParameter.USER, username);
-    	parameters.put(SessionParameter.PASSWORD, new String(password));
-    	// connection settings
-    	switch (bindingType) {
+	@Override
+	protected void doConnect() {
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put(SessionParameter.USER, username);
+		parameters.put(SessionParameter.PASSWORD, new String(password));
+		// connection settings
+		switch (bindingType) {
 		case BROWSER:
-	    	parameters.put(SessionParameter.BROWSER_URL, serverUrl.toExternalForm());
-	    	break;
+			parameters.put(SessionParameter.BROWSER_URL,
+					serverUrl.toExternalForm());
+			break;
 		default:
-	    	parameters.put(SessionParameter.ATOMPUB_URL, serverUrl.toExternalForm());
+			parameters.put(SessionParameter.ATOMPUB_URL,
+					serverUrl.toExternalForm());
 			break;
 		}
-    	parameters.put(SessionParameter.BINDING_TYPE, bindingType.value());
-    	this.repos = sessionFactory.getRepositories(parameters);
-    }
+		parameters.put(SessionParameter.BINDING_TYPE, bindingType.value());
+		try {
+			this.repos = sessionFactory.getRepositories(parameters);
+		} catch (CmisPermissionDeniedException e) {
+			System.err.println(e.getMessage());
+		}
+	}
 
-    public void disconnect() {
-    	if(this.repos!=null)
-    		this.repos.clear();
-    }
+	public void disconnect() {
+		this.username = null;
+		this.password = null;
+		this.ctx = getRootContext();
+		if (this.repos != null) {
+			this.repos.clear();
+			this.repos = null;
+		}
+	}
 
-    public boolean isConnected() {
-        return repos != null;
-    }
+	public boolean isConnected() {
+		return repos != null;
+	}
 
-    public Context getRootContext() {
-        return new ChemistryRootContext(this);
-    }
+	public Context getRootContext() {
+		return new ChemistryRootContext(this);
+	}
 
 }

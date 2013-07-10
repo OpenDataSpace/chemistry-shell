@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.chemistry.shell.cmds.base.Match;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.command.CommandRegistry;
@@ -76,16 +77,13 @@ public class Console {
 
     public String runCommand(String line) throws Exception {
         CommandLine commandLine = parseCommandLine(app.getCommandRegistry(), line);
-        String result;
-        lastResult = buffer.toString();
-        buffer = new StringBuffer();
-        commandLine.run(app);
-        result = buffer.toString();
-        if ("match".equals(commandLine.getCommand().getName())) {
-            // Keep previous result in case we have several 'match' commands
-            buffer = new StringBuffer(lastResult);
-        }
-        return result;
+		if (!(commandLine.getCommand() instanceof Match)) {
+			// Create new buffer in case we haven't got a 'match' command
+			buffer = new StringBuffer();
+		}
+		commandLine.run(app);
+		lastResult = buffer.toString();
+		return lastResult;
     }
 
     public static CommandLine parseCommandLine(CommandRegistry reg, String line) throws CommandException {

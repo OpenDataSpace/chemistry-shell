@@ -138,10 +138,30 @@ public class CompatibilityIT {
 		assertTrue(repoFound);
 	}
 	
-	@Ignore("Not yet implemented")
+//	@Ignore("Not yet implemented")
 	@Test
 	public void testMatch() throws Exception {
-		
+		Console console = Console.getDefault();
+		String result = console.runCommand("id");
+		assertEquals(result, console.getLastResult());
+		console.runCommand("match \"^CMIS server.*\"");
+		assertEquals(result, console.getLastResult());
+		console.runCommand("match -r \"foobar\"");
+		assertEquals(result, console.getLastResult());
+		String[] repos = console.runCommand("ls").split("\n");
+		if (repos.length == 0) {
+			System.err.println("Exception: repos are empty (" + repos + ")");
+			throw new IllegalArgumentException("No cmis repository found");
+		}
+		boolean repoFound = false;
+		for (String repo : repos) {
+			if (repo.equalsIgnoreCase(reponame)) {
+				console.runCommand("cd \"" + repo + "\"");
+				repoFound = true;
+				break;
+			}
+		}
+		assertTrue(repoFound);
 	}
 
 }
