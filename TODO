@@ -14,7 +14,7 @@ P2:
 - bigger announcement
 
 P3:
-- 'rm -r'
+- [DONE] 'rm -r'
 - 'ls -l'
 - 'put -t type ...' and 'mkfile/mkdir -t type'
 - variables (or at least constants): -Dname=value -> $name
