@@ -9,4 +9,5 @@ Contributors
 
 - Florent Guillaume: code review
 - Olivier Grisel: feature requests
+- Till Lorentzen: refactoring and updating
 

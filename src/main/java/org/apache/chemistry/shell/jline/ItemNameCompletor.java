@@ -41,7 +41,7 @@ public class ItemNameCompletor implements Completer {
         this.console = console;
     }
 
-    public int complete(String buffer, int cursor, List candidates) {
+    public int complete(String buffer, int cursor, List<CharSequence> candidates) {
         if (buffer == null) {
             buffer = "";
         }

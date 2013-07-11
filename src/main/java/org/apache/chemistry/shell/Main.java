@@ -134,7 +134,7 @@ public class Main {
 					System.exit(1);
 				}
 			}
-			if (username == null) {
+			if (url != null && username == null) {
 				username = System.console().readLine("User: ");
 			}
 			if (username != null && password == null) {
@@ -211,7 +211,6 @@ public class Main {
 			// service to cd in
 			JLineConsole con = new JLineConsole();
 			Console.setDefault(con);
-			con.println("CMIS Shell by Nuxeo (www.nuxeo.com). Type 'help' for help.");
 			con.start(app);
 		} catch (Exception e) {
 			e.printStackTrace();
