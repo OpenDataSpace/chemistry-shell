@@ -37,6 +37,7 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
+import org.apache.chemistry.opencmis.commons.enums.PropertyType;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 import org.apache.chemistry.shell.app.Console;
 import org.apache.chemistry.shell.command.CommandException;
@@ -66,8 +67,18 @@ public class SimplePropertyManager {
 	}
 
 	public void setProperty(String name, String value) throws Exception {
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put(name, value);
+		Property<Object> p = item.getProperty(name);
+		if (p == null) {
+			return;
+		}
+		Map<String, Object> properties = new HashMap<String, Object>();
+		if (p.getType() == PropertyType.DATETIME) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(new SimpleDateFormat().parse(value));
+			properties.put(name, cal);
+		}else{
+			properties.put(name, value);
+		}
 		item.updateProperties(properties);
 	}
 
@@ -87,8 +98,7 @@ public class SimplePropertyManager {
 				valueAsString = "[null]";
 			}
 
-			Console.getDefault().println(
-					prop.getId() + " = " + valueAsString);
+			Console.getDefault().println(prop.getId() + " = " + valueAsString);
 		}
 	}
 

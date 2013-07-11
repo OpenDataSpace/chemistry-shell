@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(value = Parameterized.class)
 public class CompatibilityIT {
 
-	static final Logger LOGGER = LoggerFactory
-			.getLogger(CompatibilityIT.class);
+	static final Logger LOGGER = LoggerFactory.getLogger(CompatibilityIT.class);
 	private ChemistryApp app;
 	private String username;
 	private String password;
@@ -137,14 +136,15 @@ public class CompatibilityIT {
 		}
 		assertTrue(repoFound);
 	}
-	
-//	@Ignore("Not yet implemented")
+
+	// @Ignore("Not yet implemented")
 	@Test
 	public void testMatch() throws Exception {
 		Console console = Console.getDefault();
 		String result = console.runCommand("id");
 		assertEquals(result, console.getLastResult());
-		console.runCommand("match \"^CMIS server.*\"");
+		console.runCommand("match \"^"
+				+ result.substring(0, result.length() / 2) + ".*\"");
 		assertEquals(result, console.getLastResult());
 		console.runCommand("match -r \"foobar\"");
 		assertEquals(result, console.getLastResult());
