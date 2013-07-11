@@ -67,18 +67,18 @@ public class SimplePropertyManager {
 	}
 
 	public void setProperty(String name, String value) throws Exception {
-		Property<Object> p = item.getProperty(name);
-		if (p == null) {
-			return;
-		}
+//		Property<Object> p = item.getProperty(name);
+//		if (p == null) {
+//			return;
+//		}
 		Map<String, Object> properties = new HashMap<String, Object>();
-		if (p.getType() == PropertyType.DATETIME) {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(new SimpleDateFormat().parse(value));
-			properties.put(name, cal);
-		}else{
+//		if (p.getType() == PropertyType.DATETIME) {
+//			Calendar cal = Calendar.getInstance();
+//			cal.setTime(new SimpleDateFormat().parse(value));
+//			properties.put(name, cal);
+//		}else{
 			properties.put(name, value);
-		}
+//		}
 		item.updateProperties(properties);
 	}
 
