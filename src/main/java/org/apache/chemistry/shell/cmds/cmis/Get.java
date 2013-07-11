@@ -41,41 +41,44 @@ import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.SimplePropertyManager;
 
 // TODO: add an optional local name for the file
-@Cmd(syntax="get|getstream target:item", synopsis="Downloads the stream of the target document")
+@Cmd(syntax = "get|getstream target:item [localfilename]", synopsis = "Downloads the stream of the target document")
 public class Get extends ChemistryCommand {
 
-    @Override
-    protected void execute(ChemistryApp app, CommandLine cmdLine)
-            throws Exception {
+	@Override
+	protected void execute(ChemistryApp app, CommandLine cmdLine)
+			throws Exception {
 
-        String target = cmdLine.getParameterValue("target");
+		String target = cmdLine.getParameterValue("target");
 
-        Context ctx = app.resolveContext(new Path(target));
-        if (ctx == null) {
-            throw new CommandException("Cannot resolve "+target);
-        }
+		Context ctx = app.resolveContext(new Path(target));
+		if (ctx == null) {
+			throw new CommandException("Cannot resolve " + target);
+		}
 
-        Document obj = ctx.as(Document.class);
-        if (obj == null) {
-            throw new CommandException("Your target must be a document");
-        }
+		Document obj = ctx.as(Document.class);
+		if (obj == null) {
+			throw new CommandException("Your target must be a document");
+		}
 
-        ContentStream cs = new SimplePropertyManager(obj).getStream();
-        if (cs == null) {
-            throw new CommandException("Your target doesn't have a stream");
-        }
+		ContentStream cs = new SimplePropertyManager(obj).getStream();
+		if (cs == null) {
+			throw new CommandException("Your target doesn't have a stream");
+		}
+		String name = cmdLine.getParameterValue("localfilename");
 
-        String name = cs.getFileName();
-        InputStream in = cs.getStream();
-        File file = app.resolveFile(name);
-        FileOutputStream out = new FileOutputStream(file);
-        try {
-            IOUtils.copy(in, out);
-            println("Object stream saved to local file: " + file);
-        } finally {
-            out.close();
-            in.close();
-        }
-    }
+		if (name == null)
+			name = cs.getFileName();
+		
+		InputStream in = cs.getStream();
+		File file = app.resolveFile(name);
+		FileOutputStream out = new FileOutputStream(file);
+		try {
+			IOUtils.copy(in, out);
+			println("Object stream saved to local file: " + file);
+		} finally {
+			out.close();
+			in.close();
+		}
+	}
 
 }
