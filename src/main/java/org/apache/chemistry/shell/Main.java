@@ -94,7 +94,7 @@ public class Main {
 						command = args[i];
 					}
 					break;
-				} else if ("-h".equals(arg)) { // help
+				} else if ("-h".equals(arg) || "--help".equals(arg)) { // help
 					// execute help command
 					usage();
 					System.exit(0);
@@ -102,6 +102,9 @@ public class Main {
 					url = arg;
 				} else if ("-j".equals(arg)) { // use json binding
 					useJSONBinding = true;
+				} else if ("--version".equals(arg)){ // print actual version
+					version();
+					System.exit(0);
 				} else {
 					System.err.println("Skipping unknown argument: " + arg);
 				}
@@ -220,6 +223,12 @@ public class Main {
 	static void error(String msg) {
 		System.err.println(msg);
 		System.exit(1);
+	}
+	
+	static void version() throws IOException {
+		URL url = Main.class.getResource("/help/version.help");
+		String help = IOUtils.toString(url.openStream());
+		System.out.print(help);
 	}
 
 	static void usage() throws IOException {
