@@ -76,7 +76,7 @@ public class Ls extends Command {
 					String owner = document.getLastModifiedBy();
 					String group = document.getCreatedBy();
 					long size = document.getContentStreamLength();
-					String modDate = new SimpleDateFormat("yyyy MMM dd hh:mm")
+					String modDate = new SimpleDateFormat("yyyy MMM dd HH:mm")
 							.format(document.getLastModificationDate()
 									.getTime());
 					String name = document.getName();
