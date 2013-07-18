@@ -16,7 +16,7 @@
           <Component Id='MainJAR' Guid='1F3507CC-206A-463B-868B-0D246B57A4EE'>
             <File Id='chemistryshell.jar' Name='chemistry-shell-$(var.version).jar' DiskId='1' Source='target\chemistry-shell-$(var.version).jar' KeyPath='yes'>
             </File>
-            <File Id='cmissh.bat' Name='cmissh.bat' DiskId='1' Source='target\cmissh.bat'>
+            <File Id='cmissh.bat' Name='cmissh.bat' DiskId='1' Source='scripts\cmissh.bat'>
             </File>
           </Component>
         </Directory>
