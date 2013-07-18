@@ -38,7 +38,7 @@
 
     <Property Id="JRE32">
       <RegistrySearch
-        Id="JRE_KEY"
+        Id="JRE_KEY32"
         Root="HKLM"
         Key="SOFTWARE\JavaSoft\Java Runtime Environment"
         Name="CurrentVersion"
@@ -48,7 +48,7 @@
     </Property>
     <Property Id="JRE64">
       <RegistrySearch
-        Id="JRE_KEY"
+        Id="JRE_KEY64"
         Root="HKLM"
         Key="SOFTWARE\JavaSoft\Java Runtime Environment"
         Name="CurrentVersion"
