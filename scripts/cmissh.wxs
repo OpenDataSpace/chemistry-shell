@@ -22,15 +22,21 @@
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Component Id="ApplicationShortcut" Guid="05A278C7-D142-428D-870B-7360015C6AF0">
-          <Shortcut Id="ApplicationStartMenuShortcut"
-                        Name="CMIS Shell"
-                        Target="[INSTALLDIR]cmissh.bat"
-                        WorkingDirectory="INSTALLDIR"/>
-          <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
-        </Component>
+        <Directory Id="ApplicationProgramsFolder" Name="CMIS Shell"/>
+      </Directory>
+      
       </Directory>
     </Directory>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="05A278C7-D142-428D-870B-7360015C6AF0">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="CMIS Shell"
+                  Target="[INSTALLDIR]cmissh.bat"
+                  WorkingDirectory="INSTALLDIR"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+      </Component>
+    </DirectoryRef>
 
     <Property Id="JRE">
       <RegistrySearch
