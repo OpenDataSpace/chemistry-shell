@@ -24,8 +24,6 @@
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="CMIS Shell"/>
       </Directory>
-      
-      </Directory>
     </Directory>
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="ApplicationShortcut" Guid="05A278C7-D142-428D-870B-7360015C6AF0">
