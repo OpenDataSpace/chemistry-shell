@@ -14,23 +14,22 @@
       <Directory Id='ProgramFilesFolder' Name='PFiles'>
         <Directory Id='INSTALLDIR' Name='CMIS Shell'>
           <Component Id='MainJAR' Guid='1F3507CC-206A-463B-868B-0D246B57A4EE'>
-            <File Id='chemistry-shell.jar' Name='chemistry-shell-[VERSION].jar' DiskId='1' Source='!(wix.root)\target\chemistry-shell-[VERSION].jar' KeyPath='yes'>
+            <File Id='chemistryshell.jar' Name='chemistry-shell-[VERSION].jar' DiskId='1' Source='!(wix.root)\target\chemistry-shell-[VERSION].jar' KeyPath='yes'>
             </File>
             <File Id='cmissh.bat' Name='cmissh.bat' DiskId='1' Source='!(wix.root)\target\cmissh.bat'>
             </File>
           </Component>
         </Directory>
       </Directory>
-    </Directory>
-
-    <Directory Id="ProgramMenuFolder">
-      <Component Id="ApplicationShortcut" Guid="05A278C7-D142-428D-870B-7360015C6AF0">
-        <Shortcut Id="ApplicationStartMenuShortcut"
-                      Name="CMIS Shell"
-                      Target="[INSTALLDIR]cmissh.bat"
-                      WorkingDirectory="INSTALLDIR"/>
-        <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
-      </Component>
+      <Directory Id="ProgramMenuFolder">
+        <Component Id="ApplicationShortcut" Guid="05A278C7-D142-428D-870B-7360015C6AF0">
+          <Shortcut Id="ApplicationStartMenuShortcut"
+                        Name="CMIS Shell"
+                        Target="[INSTALLDIR]cmissh.bat"
+                        WorkingDirectory="INSTALLDIR"/>
+          <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+        </Component>
+      </Directory>
     </Directory>
 
     <Property Id="JRE">
@@ -45,10 +44,9 @@
     <Feature Id='Complete' Title='CMIS Shell' Level='1' AllowAdvertise='no'>
       <ComponentRef Id='MainJAR' />
       <ComponentRef Id='ProgramMenuDir' />
-      <Condition Message="Java not installed. Please install JRE 1.6 or later." Level="0">
-        <![CDATA[(Installed OR JRE) AND JRE >= "1.6"]]>
-      </Condition>
     </Feature>
-
+    <Condition Message="Java not installed. Please install JRE 1.6 or later.">
+      <![CDATA[(Installed OR JRE) AND JRE >= "1.6"]]>
+    </Condition>
   </Product>
 </Wix>
