@@ -47,7 +47,7 @@
     </Property>
     <Feature Id='Complete' Title='CMIS Shell' Level='1' AllowAdvertise='no'>
       <ComponentRef Id='MainJAR' />
-      <ComponentRef Id='ProgramMenuDir' />
+      <ComponentRef Id='ApplicationShortcut' />
     </Feature>
     <Condition Message="Java not installed. Please install JRE 1.6 or later.">
       <![CDATA[(Installed OR JRE) AND JRE >= "1.6"]]>
