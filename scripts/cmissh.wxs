@@ -14,9 +14,9 @@
       <Directory Id='ProgramFilesFolder' Name='PFiles'>
         <Directory Id='INSTALLDIR' Name='CMIS Shell'>
           <Component Id='MainJAR' Guid='1F3507CC-206A-463B-868B-0D246B57A4EE'>
-            <File Id='chemistryshell.jar' Name='chemistry-shell-[VERSION].jar' DiskId='1' Source='!(wix.root)\target\chemistry-shell-[VERSION].jar' KeyPath='yes'>
+            <File Id='chemistryshell.jar' Name='chemistry-shell-[VERSION].jar' DiskId='1' Source='target\chemistry-shell-[VERSION].jar' KeyPath='yes'>
             </File>
-            <File Id='cmissh.bat' Name='cmissh.bat' DiskId='1' Source='!(wix.root)\target\cmissh.bat'>
+            <File Id='cmissh.bat' Name='cmissh.bat' DiskId='1' Source='target\cmissh.bat'>
             </File>
           </Component>
         </Directory>
