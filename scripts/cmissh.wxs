@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
   <Product Name='CMIS Shell' Id='65961233-5A2D-46AE-BCC2-8EE700A0DDCA' UpgradeCode='F50B59F6-D4E3-4924-9396-174C876C2B8B'
-    Language='1033' Codepage='1252' Version='0.5.52' Manufacturer='GRAU DATA AG'>
+    Language='1033' Codepage='1252' Version='$(var.version)' Manufacturer='GRAU DATA AG'>
 
     <Package Id='*' Keywords='Installer' Description="CMIS Shell Installer"
       Comments='CMIS Shell is an open source shell to interact with a cmis repository' Manufacturer='GRAU DATA AG'
@@ -14,7 +14,7 @@
       <Directory Id='ProgramFilesFolder' Name='PFiles'>
         <Directory Id='INSTALLDIR' Name='CMIS Shell'>
           <Component Id='MainJAR' Guid='1F3507CC-206A-463B-868B-0D246B57A4EE'>
-            <File Id='chemistryshell.jar' Name='chemistry-shell-[VERSION].jar' DiskId='1' Source='target\chemistry-shell-[VERSION].jar' KeyPath='yes'>
+            <File Id='chemistryshell.jar' Name='chemistry-shell-$(var.version).jar' DiskId='1' Source='target\chemistry-shell-$(var.version).jar' KeyPath='yes'>
             </File>
             <File Id='cmissh.bat' Name='cmissh.bat' DiskId='1' Source='target\cmissh.bat'>
             </File>
