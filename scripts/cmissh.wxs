@@ -36,13 +36,24 @@
       </Component>
     </DirectoryRef>
 
-    <Property Id="JRE">
+    <Property Id="JRE32">
       <RegistrySearch
         Id="JRE_KEY"
         Root="HKLM"
         Key="SOFTWARE\JavaSoft\Java Runtime Environment"
         Name="CurrentVersion"
         Type="raw"
+        Win64="no"
+        />
+    </Property>
+    <Property Id="JRE64">
+      <RegistrySearch
+        Id="JRE_KEY"
+        Root="HKLM"
+        Key="SOFTWARE\JavaSoft\Java Runtime Environment"
+        Name="CurrentVersion"
+        Type="raw"
+        Win64="yes"
         />
     </Property>
     <Feature Id='Complete' Title='CMIS Shell' Level='1' AllowAdvertise='no'>
@@ -50,7 +61,7 @@
       <ComponentRef Id='ApplicationShortcut' />
     </Feature>
     <Condition Message="Java not installed. Please install JRE 1.6 or later.">
-      <![CDATA[(Installed OR JRE) AND JRE >= "1.6"]]>
+      <![CDATA[(Installed OR (JRE32 OR JRE64)) AND ((JRE32 >="1.6") OR (JRE64 >="1.6"))]]>
     </Condition>
   </Product>
 </Wix>
