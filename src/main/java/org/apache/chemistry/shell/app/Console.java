@@ -29,6 +29,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.chemistry.shell.cmds.base.Match;
+import org.apache.chemistry.shell.cmds.base.Time;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.command.CommandRegistry;
@@ -43,7 +44,17 @@ public class Console {
     protected StringBuffer buffer = new StringBuffer();
     protected String lastResult;
 
-    public static Console getDefault() {
+	protected boolean printTimeStamps = false;
+	
+    public boolean isPrintTimeStamps() {
+		return printTimeStamps;
+	}
+
+	public void setPrintTimeStamps(boolean printTimeStamps) {
+		this.printTimeStamps = printTimeStamps;
+	}
+
+	public static Console getDefault() {
         return instance;
     }
 
@@ -77,12 +88,17 @@ public class Console {
 
     public String runCommand(String line) throws Exception {
         CommandLine commandLine = parseCommandLine(app.getCommandRegistry(), line);
-		if (!(commandLine.getCommand() instanceof Match)) {
-			// Create new buffer in case we haven't got a 'match' command
+		if (!(commandLine.getCommand() instanceof Match|| commandLine.getCommand() instanceof Time)) {
+			// Create new buffer in case we haven't got a 'match' or 'time' command
 			buffer = new StringBuffer();
 		}
+		long time = System.currentTimeMillis();
 		commandLine.run(app);
+		time = System.currentTimeMillis() - time;
 		lastResult = buffer.toString();
+		if(printTimeStamps){
+			System.out.println(String.format("[%d] ", time));
+		}
 		return lastResult;
     }
 
