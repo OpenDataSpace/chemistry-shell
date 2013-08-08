@@ -43,6 +43,7 @@ import org.apache.chemistry.shell.cmds.base.Match;
 import org.apache.chemistry.shell.cmds.base.Popd;
 import org.apache.chemistry.shell.cmds.base.Pushd;
 import org.apache.chemistry.shell.cmds.base.Pwd;
+import org.apache.chemistry.shell.cmds.base.Time;
 import org.apache.chemistry.shell.util.StringUtils;
 
 public class CommandRegistry {
@@ -67,6 +68,7 @@ public class CommandRegistry {
         builtinCommands.registerCommand(new LPwd());
         builtinCommands.registerCommand(new Ll());
         builtinCommands.registerCommand(new Match());
+        builtinCommands.registerCommand(new Time());
     }
 
     public CommandRegistry(Map<String, Command> cmds) {
