@@ -1,0 +1,2 @@
+# Ensure the correct line ending for chissh script for linux
+scripts/cmissh text eol=lf
