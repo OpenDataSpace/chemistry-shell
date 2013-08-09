@@ -33,47 +33,77 @@ import org.apache.chemistry.shell.app.Console;
 
 public class SimpleBrowser {
 
-    protected final Folder root;
+	protected final Folder root;
 
-    public SimpleBrowser(Folder root) {
-        this.root = root;
-    }
+	protected int depth = -1;
+	
+	private static boolean supportsUTF8() {
+		String osName = System.getProperty("os.name");
+		return !osName.toLowerCase().contains("windows");
+	}
 
-    public void browse() throws IOException {
-    	dumpWithPath("", root);
-        doBrowse("", root);
-    }
+	protected String startingItem(boolean isLast) {
+		if (isLast) {
+			if (supportsUTF8())
+				return "└── ";
+			else
+				return "+-- ";
+		} else {
+			if (supportsUTF8())
+				return "├── ";
+			else
+				return "+-- ";
+		}
+	}
 
-    protected void doBrowse(String tabs, Folder currentNode) throws IOException {
-        ItemIterable<CmisObject> children = currentNode.getChildren();
-        long i = 1;
-        boolean lastElement = false;
-        String startingItem = "├── ";
-        String nextTabs = tabs;
-        for (CmisObject child : children) {
-        	if(i == children.getTotalNumItems()){
-        		lastElement = true;
-        	}
-        	if(lastElement){
-        		startingItem = "└── ";
-        		nextTabs = tabs + "    ";
-        	} else {
-        		nextTabs = tabs + "│   ";
-        	}
-            if (child instanceof Folder) {
-                Folder folder = (Folder) child;
-                dumpWithPath(tabs + startingItem, folder);
-                doBrowse(nextTabs, folder);
-            } else {
-                dumpWithPath(tabs + startingItem, child);
-            }
-            i++;
-        }
-    }
+	protected String nextTabs(boolean isLast) {
+		if (isLast)
+			return "    ";
+		else if (supportsUTF8())
+			return "│   ";
+		else
+			return "|   ";
+	}
 
-    protected void dumpWithPath(String tabs, CmisObject item) {
-        Console.getDefault().println(tabs + ColorHelper.decorateNameByType(item.getName(),
-				item.getType().getId())+" ["+item.getType().getId()+"]");
-    }
+	public SimpleBrowser(Folder root, int depth) {
+		this.root = root;
+		this.depth = depth;
+	}
+
+	public void browse() throws IOException {
+		dumpWithPath("", root);
+		doBrowse("", root, depth);
+	}
+
+	protected void doBrowse(String tabs, Folder currentNode, int depth) throws IOException {
+		if(depth == 0)
+			return;
+		ItemIterable<CmisObject> children = currentNode.getChildren();
+		long i = 1;
+		long count = children.getTotalNumItems();
+		for (CmisObject child : children) {
+			boolean isLastElement = (i == count);
+			if (child instanceof Folder) {
+				Folder folder = (Folder) child;
+				dumpWithPath(tabs + startingItem(isLastElement), folder);
+				doBrowse(tabs + nextTabs(isLastElement), folder, depth -1);
+			} else {
+				dumpWithPath(tabs + startingItem(isLastElement), child);
+			}
+			i++;
+		}
+	}
+
+	protected void dumpWithPath(String tabs, CmisObject item) {
+		String entryTypeId = item.getType().getId();
+		if (entryTypeId.startsWith("cmis:")) {
+			entryTypeId = entryTypeId.substring("cmis:".length());
+		}
+		Console.getDefault().println(
+				tabs
+						+ ColorHelper.decorateNameByType(item.getName(),
+								entryTypeId) + " [" + item.getType().getId()
+						+ "]");
+	}
 
 }

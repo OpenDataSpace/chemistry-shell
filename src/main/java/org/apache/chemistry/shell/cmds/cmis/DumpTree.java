@@ -27,6 +27,7 @@ package org.apache.chemistry.shell.cmds.cmis;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
+import org.apache.chemistry.shell.app.ChemistryContext;
 import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
@@ -34,12 +35,13 @@ import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.TreeBrowser;
 
-@Cmd(syntax = "dump|tree [target:item] [depth]", synopsis = "Dump a subtree")
+@Cmd(syntax = "dump|tree [target:item] [depth] ", synopsis = "Dump a subtree")
 public class DumpTree extends ChemistryCommand {
 
 	@Override
 	protected void execute(ChemistryApp app, CommandLine cmdLine)
 			throws Exception {
+		
 		String target = cmdLine.getParameterValue("target");
 
 		Context ctx;
@@ -51,7 +53,7 @@ public class DumpTree extends ChemistryCommand {
 		} else {
 			ctx = app.getContext();
 		}
-
+		
 		String depthParam = cmdLine.getParameterValue("depth");
 		int depth = -1;
 		if (depthParam != null) {
@@ -62,10 +64,14 @@ public class DumpTree extends ChemistryCommand {
 						+ "\" is not a number");
 			}
 		}
-
+		boolean isGetDescendantsSupported = false;
+		if(ctx instanceof ChemistryContext){
+			ChemistryContext context = (ChemistryContext) ctx;
+			isGetDescendantsSupported = context.getRepository().getCapabilities().isGetDescendantsSupported();
+		}
 		Folder folder = ctx.as(Folder.class);
 		if (folder != null) {
-			new TreeBrowser(folder, depth).browse();
+			new TreeBrowser(folder, depth, isGetDescendantsSupported).browse();
 		} else {
 			throw new CommandException("Target " + target + " is not a folder");
 		}
