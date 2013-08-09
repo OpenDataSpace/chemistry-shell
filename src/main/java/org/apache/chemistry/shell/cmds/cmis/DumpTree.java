@@ -32,32 +32,43 @@ import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.util.Path;
-import org.apache.chemistry.shell.util.SimpleBrowser;
+import org.apache.chemistry.shell.util.TreeBrowser;
 
-@Cmd(syntax="dump|tree [target:item]", synopsis="Dump a subtree")
+@Cmd(syntax = "dump|tree [target:item] [depth]", synopsis = "Dump a subtree")
 public class DumpTree extends ChemistryCommand {
 
-    @Override
-    protected void execute(ChemistryApp app, CommandLine cmdLine)
-            throws Exception {
-        String target = cmdLine.getParameterValue("target");
+	@Override
+	protected void execute(ChemistryApp app, CommandLine cmdLine)
+			throws Exception {
+		String target = cmdLine.getParameterValue("target");
 
-        Context ctx;
-        if (target != null) {
-            ctx = app.resolveContext(new Path(target));
-            if (ctx == null) {
-                throw new CommandException("Cannot resolve "+target);
-            }
-        } else {
-            ctx = app.getContext();
-        }
+		Context ctx;
+		if (target != null) {
+			ctx = app.resolveContext(new Path(target));
+			if (ctx == null) {
+				throw new CommandException("Cannot resolve " + target);
+			}
+		} else {
+			ctx = app.getContext();
+		}
 
-        Folder folder = ctx.as(Folder.class);
-        if (folder != null) {
-            new SimpleBrowser(folder).browse();
-        } else {
-            throw new CommandException("Target "+target+" is not a folder");
-        }
-    }
+		String depthParam = cmdLine.getParameterValue("depth");
+		int depth = -1;
+		if (depthParam != null) {
+			try {
+				depth = Integer.parseInt(depthParam);
+			} catch (NumberFormatException ex) {
+				throw new CommandException("Given depth \"" + depthParam
+						+ "\" is not a number");
+			}
+		}
+
+		Folder folder = ctx.as(Folder.class);
+		if (folder != null) {
+			new TreeBrowser(folder, depth).browse();
+		} else {
+			throw new CommandException("Target " + target + " is not a folder");
+		}
+	}
 
 }

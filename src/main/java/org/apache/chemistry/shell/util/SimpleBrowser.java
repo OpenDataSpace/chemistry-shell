@@ -29,7 +29,6 @@ import java.io.IOException;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
-import org.apache.chemistry.opencmis.client.api.ObjectType;
 import org.apache.chemistry.shell.app.Console;
 
 public class SimpleBrowser {
@@ -41,28 +40,40 @@ public class SimpleBrowser {
     }
 
     public void browse() throws IOException {
-        doBrowse(root);
-    }
-
-    protected void doBrowse(Folder currentNode) throws IOException {
-        doBrowse("+", currentNode);
+    	dumpWithPath("", root);
+        doBrowse("", root);
     }
 
     protected void doBrowse(String tabs, Folder currentNode) throws IOException {
-        dumpWithPath(tabs, currentNode);
         ItemIterable<CmisObject> children = currentNode.getChildren();
+        long i = 1;
+        boolean lastElement = false;
+        String startingItem = "├── ";
+        String nextTabs = tabs;
         for (CmisObject child : children) {
-            if (ObjectType.FOLDER_BASETYPE_ID.equals(child.getType())) {
+        	if(i == children.getTotalNumItems()){
+        		lastElement = true;
+        	}
+        	if(lastElement){
+        		startingItem = "└── ";
+        		nextTabs = tabs + "    ";
+        	} else {
+        		nextTabs = tabs + "│   ";
+        	}
+            if (child instanceof Folder) {
                 Folder folder = (Folder) child;
-                doBrowse(tabs + "--+", folder);
+                dumpWithPath(tabs + startingItem, folder);
+                doBrowse(nextTabs, folder);
             } else {
-                dumpWithPath(tabs + "---", child);
+                dumpWithPath(tabs + startingItem, child);
             }
+            i++;
         }
     }
 
     protected void dumpWithPath(String tabs, CmisObject item) {
-        Console.getDefault().println(tabs+ " "+ item.getName()+" ["+item.getType().getId()+"]");
+        Console.getDefault().println(tabs + ColorHelper.decorateNameByType(item.getName(),
+				item.getType().getId())+" ["+item.getType().getId()+"]");
     }
 
 }
