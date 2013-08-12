@@ -59,6 +59,8 @@ public class DumpTree extends ChemistryCommand {
 		if (depthParam != null) {
 			try {
 				depth = Integer.parseInt(depthParam);
+				if(depth < -1 || depth == 0)
+					throw new CommandException("Given depth \"" + depthParam +"\" is not allowed");
 			} catch (NumberFormatException ex) {
 				throw new CommandException("Given depth \"" + depthParam
 						+ "\" is not a number");

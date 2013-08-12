@@ -35,7 +35,7 @@ public class TreeBrowser extends SimpleBrowser {
 	
 	public void browseTree() throws IOException {
 		dumpWithPath("", root);
-		doBrowseTree("", this.root.getDescendants(depth-1));
+		doBrowseTree("", this.root.getDescendants(depth));
 	}
 	
 	
