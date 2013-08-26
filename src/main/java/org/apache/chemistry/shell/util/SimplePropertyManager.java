@@ -97,8 +97,8 @@ public class SimplePropertyManager {
 			} else {
 				valueAsString = "[null]";
 			}
-
-			Console.getDefault().println(prop.getId() + " = " + valueAsString);
+			Console.getDefault().println(prop.getId()+ " ["
+			+ prop.getDefinition().getUpdatability().toString() +"] = " + valueAsString);
 		}
 	}
 
