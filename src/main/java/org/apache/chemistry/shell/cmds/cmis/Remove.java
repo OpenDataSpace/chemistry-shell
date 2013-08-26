@@ -25,6 +25,7 @@
 package org.apache.chemistry.shell.cmds.cmis;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.shell.app.ChemistryApp;
@@ -53,7 +54,15 @@ public class Remove extends ChemistryCommand {
         Context ctx = app.resolveContext(parent);
         Folder folder = ctx.as(Folder.class);
         if (folder == null) {
-            throw new CommandException(parent+" doesn't exist or is not a folder");
+        	Document doc = ctx.as(Document.class);
+        	if(doc == null || recurse)
+        		throw new CommandException(parent+" doesn't exist or is not a folder");
+        	else {
+        		// Delete Document
+        		doc.delete();
+        		ctx.reset();
+        		return;
+        	}
         }
 
         boolean success = false;
