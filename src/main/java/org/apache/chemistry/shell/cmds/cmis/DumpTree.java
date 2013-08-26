@@ -35,7 +35,7 @@ import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.TreeBrowser;
 
-@Cmd(syntax = "dump|tree [target:item] [depth] ", synopsis = "Dump a subtree")
+@Cmd(syntax = "dump|tree [--force-walkthrough] [target:item] [depth]", synopsis = "Dump a subtree")
 public class DumpTree extends ChemistryCommand {
 
 	@Override
@@ -43,7 +43,7 @@ public class DumpTree extends ChemistryCommand {
 			throws Exception {
 		
 		String target = cmdLine.getParameterValue("target");
-
+		boolean walkthrough = cmdLine.getParameter("--force-walkthrough") != null;
 		Context ctx;
 		if (target != null) {
 			ctx = app.resolveContext(new Path(target));
@@ -67,7 +67,7 @@ public class DumpTree extends ChemistryCommand {
 			}
 		}
 		boolean isGetDescendantsSupported = false;
-		if(ctx instanceof ChemistryContext){
+		if(!walkthrough && ctx instanceof ChemistryContext){
 			ChemistryContext context = (ChemistryContext) ctx;
 			isGetDescendantsSupported = context.getRepository().getCapabilities().isGetDescendantsSupported();
 		}
