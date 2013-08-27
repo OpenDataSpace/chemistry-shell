@@ -217,10 +217,10 @@ public class CompatibilityIT {
 		} finally {
 			ls = Arrays.asList(console.runCommand("ls").split("\n"));
 			if (ls.contains("mvsource")) {
-				console.runCommand("rm mvsource");
+				console.runCommand("rm -r mvsource");
 			}
 			if (ls.contains("mvtarget")) {
-				console.runCommand("rm mvtarget");
+				console.runCommand("rm -r mvtarget");
 			}	
 		}
 	}
