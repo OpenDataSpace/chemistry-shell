@@ -220,6 +220,15 @@ public class CompatibilityIT {
 				console.runCommand("rm -r mvsource");
 			}
 			if (ls.contains("mvtarget")) {
+				ls = Arrays.asList(console.runCommand("ls mvtarget").split("\n"));
+				if(ls.contains("doc2.txt"))
+					console.runCommand("rm mvtarget/doc2.txt");
+				if(ls.contains("dir")) {
+					ls = Arrays.asList(console.runCommand("ls mvtarget/dir").split("\n"));
+					if(ls.contains("doc1.txt"))
+						console.runCommand("rm mvtarget/dir/doc1.txt");	
+					console.runCommand("rm -r mvtarget/dir");	
+				}
 				console.runCommand("rm -r mvtarget");
 			}	
 		}
