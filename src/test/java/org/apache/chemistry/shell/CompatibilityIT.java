@@ -185,10 +185,10 @@ public class CompatibilityIT {
 		assertTrue(repoFound);
 		List<String> ls = Arrays.asList(console.runCommand("ls").split("\n"));
 		if (ls.contains("mvsource")) {
-			console.runCommand("rm mvsource");
+			console.runCommand("rm -r mvsource");
 		}
 		if (ls.contains("mvtarget")) {
-			console.runCommand("rm mvtarget");
+			console.runCommand("rm -r mvtarget");
 		}
 		console.runCommand("mkdir mvsource");
 		console.runCommand("mkdir mvtarget");
