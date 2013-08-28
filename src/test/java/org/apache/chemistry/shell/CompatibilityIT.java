@@ -5,15 +5,16 @@ import static org.junit.Assert.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisNotSupportedException;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.Console;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -164,4 +165,98 @@ public class CompatibilityIT {
 		assertTrue(repoFound);
 	}
 
+	@Test
+	public void testMove() throws Exception {
+		Console console = Console.getDefault();
+		console.runCommand("id");
+		String[] repos = console.runCommand("ls").split("\n");
+		if (repos.length == 0) {
+			System.err.println("Exception: repos are empty (" + repos + ")");
+			throw new IllegalArgumentException("No cmis repository found");
+		}
+		boolean repoFound = false;
+		for (String repo : repos) {
+			if (repo.equalsIgnoreCase(reponame)) {
+				console.runCommand("cd \"" + repo + "\"");
+				repoFound = true;
+				break;
+			}
+		}
+		assertTrue(repoFound);
+		List<String> ls = Arrays.asList(console.runCommand("ls").split("\n"));
+		if (ls.contains("mvsource")) {
+			console.runCommand("rm -r mvsource");
+		}
+		if (ls.contains("mvtarget")) {
+			console.runCommand("rm -r mvtarget");
+		}
+		console.runCommand("mkdir mvsource");
+		console.runCommand("mkdir mvtarget");
+		console.runCommand("mkdir mvsource/dir");
+		console.runCommand("mkdoc mvsource/dir/doc1.txt");
+		console.runCommand("mkdoc mvsource/doc2.txt");
+		try {
+			console.runCommand("mv mvsource/doc2.txt mvtarget");
+			ls = Arrays.asList(console.runCommand("ls mvtarget").split("\n"));
+			assertTrue(ls.contains("doc2.txt"));
+			ls = Arrays.asList(console.runCommand("ls mvsource").split("\n"));
+			assertFalse(ls.contains("doc2.txt"));
+
+			console.runCommand("mv mvsource/dir mvtarget");
+			ls = Arrays.asList(console.runCommand("ls mvtarget").split("\n"));
+			assertTrue(ls.contains("doc2.txt"));
+			assertTrue(ls.contains("dir"));
+			ls = Arrays.asList(console.runCommand("ls mvtarget/dir")
+					.split("\n"));
+			assertTrue(ls.contains("doc1.txt"));
+			ls = Arrays.asList(console.runCommand("ls mvsource").split("\n"));
+			assertFalse(ls.contains("dir"));
+		} catch (CmisNotSupportedException e) {
+			System.out.println("Move tests skipped due operation not supported by repo");
+			e.printStackTrace();
+		} finally {
+			ls = Arrays.asList(console.runCommand("ls").split("\n"));
+			if (ls.contains("mvsource")) {
+				console.runCommand("rm -r mvsource");
+			}
+			if (ls.contains("mvtarget")) {
+				ls = Arrays.asList(console.runCommand("ls mvtarget").split("\n"));
+				if(ls.contains("doc2.txt"))
+					console.runCommand("rm mvtarget/doc2.txt");
+				if(ls.contains("dir")) {
+					ls = Arrays.asList(console.runCommand("ls mvtarget/dir").split("\n"));
+					if(ls.contains("doc1.txt"))
+						console.runCommand("rm mvtarget/dir/doc1.txt");	
+					console.runCommand("rm -r mvtarget/dir");	
+				}
+				console.runCommand("rm -r mvtarget");
+			}	
+		}
+	}
+	
+	@Test
+	public void testTree() throws Exception {
+		Console console = Console.getDefault();
+		console.runCommand("id");
+		String[] repos = console.runCommand("ls").split("\n");
+		if (repos.length == 0) {
+			System.err.println("Exception: repos are empty (" + repos + ")");
+			throw new IllegalArgumentException("No cmis repository found");
+		}
+		boolean repoFound = false;
+		for (String repo : repos) {
+			if (repo.equalsIgnoreCase(reponame)) {
+				console.runCommand("cd \"" + repo + "\"");
+				repoFound = true;
+				break;
+			}
+		}
+		assertTrue(repoFound);
+		String tree = console.runCommand("tree");
+		assertEquals(tree, console.runCommand("tree --force-walkthrough"));
+		List<String> ls = Arrays.asList(console.runCommand("ls").split("\n"));
+		for (String entry : ls) {
+			assertTrue(tree.contains(entry));
+		}
+	}
 }
