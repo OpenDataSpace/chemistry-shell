@@ -24,6 +24,7 @@
 
 package org.apache.chemistry.shell.util;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.VersioningState;
+import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 
 public class SimpleCreator {
 
@@ -59,6 +61,18 @@ public class SimpleCreator {
 	
 	public Document createFile(String typeName, String name) throws Exception {
 		return createFile(typeName, name, null);
+	}
+	
+	public Document createDummyFile(String typeName, String name, DummyFileType dummyType, long size) throws Exception {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put(PropertyIds.OBJECT_TYPE_ID, typeName);
+		properties.put(PropertyIds.NAME, name);
+		String mimetype ="application/octet-stream"; 
+		if(dummyType == DummyFileType.TEXT)
+			mimetype = "text/plain";
+		DummyInputStream in = new DummyInputStream(size, dummyType);
+		ContentStream contentDummyStream = new ContentStreamImpl(name, BigInteger.valueOf(size), mimetype, in);
+		return folder.createDocument(properties, contentDummyStream, VersioningState.NONE);
 	}
 
 }
