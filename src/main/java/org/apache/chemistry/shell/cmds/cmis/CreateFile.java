@@ -31,10 +31,11 @@ import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
+import org.apache.chemistry.shell.util.DummyFileType;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.SimpleCreator;
 
-@Cmd(syntax="mkfile|mkdoc [-t|--type:*] target:item", synopsis="Create a document of the given name")
+@Cmd(syntax="mkfile|mkdoc [-t|--type:*] [--zero] [--one] [--text] [--random] target:item [-s|--size:*]", synopsis="Create a document of the given name")
 public class CreateFile extends ChemistryCommand {
 
     @Override
@@ -45,7 +46,18 @@ public class CreateFile extends ChemistryCommand {
         if (typeName == null) {
             typeName = "cmis:document";
         }
-
+        DummyFileType dummyType = DummyFileType.ZEROS;
+        if(cmdLine.getParameter("--zero") != null)
+        	dummyType = DummyFileType.ZEROS;
+        else if(cmdLine.getParameter("--one") != null)
+        	dummyType = DummyFileType.ONES;
+        else if(cmdLine.getParameter("--text") != null)
+        	dummyType = DummyFileType.TEXT;
+        else if(cmdLine.getParameter("--random") != null)
+        	dummyType = DummyFileType.RANDOM;
+        long size = -1;
+        if(cmdLine.getParameterValue("-s")!=null)
+           size = Long.parseLong(cmdLine.getParameterValue("-s"));
         Path path = new Path(param);
         String name = path.getLastSegment();
         Path parent = path.getParent();
@@ -55,8 +67,10 @@ public class CreateFile extends ChemistryCommand {
         if (folder == null) {
             throw new CommandException(parent+" doesn't exist or is not a folder");
         }
-
-        new SimpleCreator(folder).createFile(typeName, name);
+        if(size < 0)
+        	new SimpleCreator(folder).createFile(typeName, name);
+        else
+        	new SimpleCreator(folder).createDummyFile(typeName, name, dummyType, size);
         ctx.reset();
     }
 
