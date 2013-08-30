@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import org.apache.chemistry.opencmis.client.api.ChangeEvent;
 import org.apache.chemistry.opencmis.client.api.ChangeEvents;
+import org.apache.chemistry.opencmis.commons.enums.CapabilityChanges;
 import org.apache.chemistry.shell.app.ChemistryApp;
 import org.apache.chemistry.shell.app.ChemistryCommand;
 import org.apache.chemistry.shell.app.ChemistryContext;
@@ -25,6 +26,8 @@ public class ContentChanges extends ChemistryCommand {
 			throws Exception {
 		if (app.getContext() instanceof ChemistryContext) {
 			ChemistryContext ctx = (ChemistryContext) app.getContext();
+			if (ctx.getRepository().getCapabilities().getChangesCapability() == CapabilityChanges.NONE)
+				throw new CommandException("The repository doesn't support change log features");
 			String since = cmdLine.getParameterValue("since");
 			boolean all = cmdLine.getParameter("--all") != null;
 			Calendar sincecal = null;
