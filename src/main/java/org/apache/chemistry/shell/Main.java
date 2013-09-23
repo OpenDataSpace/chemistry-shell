@@ -47,6 +47,7 @@ public class Main {
 	boolean batchMode;
 	boolean execMode;
 	boolean testMode;
+	boolean enableTime = false;
 	boolean useJSONBinding = false;
 	String command;
 	private ChemistryApp app;
@@ -76,6 +77,8 @@ public class Main {
 					password = args[i];
 				} else if ("-t".equals(arg)) { // test mode
 					testMode = true;
+				} else if ("--enable-time".equals(arg)) { // enable time setting by default
+					enableTime = true;
 				} else if ("-e".equals(arg)) { // execute mode
 					// execute one command
 					execMode = true;
@@ -171,12 +174,14 @@ public class Main {
 
 	private void runInExecMode() throws Exception {
 		Console.setDefault(new Console());
+		Console.getDefault().setPrintTimeStamps(enableTime);
 		Console.getDefault().start(app);
 		Console.getDefault().runCommand(command);
 	}
 
 	private void runInBatchMode() throws IOException {
 		Console.setDefault(new Console());
+		Console.getDefault().setPrintTimeStamps(enableTime);
 		Console.getDefault().start(app);
 		List<String> cmds;
 		if (command == null) {
@@ -214,6 +219,7 @@ public class Main {
 			// service to cd in
 			JLineConsole con = new JLineConsole();
 			Console.setDefault(con);
+			Console.getDefault().setPrintTimeStamps(enableTime);
 			con.start(app);
 		} catch (Exception e) {
 			e.printStackTrace();
