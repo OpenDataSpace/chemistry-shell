@@ -57,6 +57,7 @@
       <artifactId>chemistry-opencmis-client-impl</artifactId>
       <version>0.10.0.55</version>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
