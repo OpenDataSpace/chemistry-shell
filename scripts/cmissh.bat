@@ -8,5 +8,5 @@ shift
 goto setArgs
 :doneSetArgs
 
-java %JAVA_OPTS% -jar "chemistry-shell-0.5.106.jar" %CMD_LINE_ARGS%
+java %JAVA_OPTS% -jar "chemistry-shell-0.5.107.jar" %CMD_LINE_ARGS%
 
