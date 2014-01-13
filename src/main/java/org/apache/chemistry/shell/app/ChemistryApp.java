@@ -98,6 +98,7 @@ public class ChemistryApp extends AbstractApplication {
 			break;
 		}
 		parameters.put(SessionParameter.BINDING_TYPE, bindingType.value());
+		parameters.put(SessionParameter.COOKIES, Boolean.TRUE.toString());
 		try {
 			this.repos = sessionFactory.getRepositories(parameters);
 		} catch (CmisPermissionDeniedException e) {
