@@ -1,3 +1,16 @@
+gds2-cmissh (0.5.3-4) unstable; urgency=low
+
+  * gitrev: f2494ca6e709da20f9278a6d5d7c72823ed247d4
+    Added iscc-based installer
+  * gitrev: 819e9640e2627865b3df009aff486876b6676dbe
+    Initial RPM package, monolithic build
+  * gitrev: c5f71f468c436c8bfb7b024da079b971bc8de567
+    Integrated packaging
+  * gitrev: f5927cd1f92030750685b67a91a317b33cc619b4
+    Merge branch 'dev'
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 17 Jan 2014 07:34:59 +0100
+
 gds2-cmissh (0.5.124-4) unstable; urgency=low
 
   * gitrev: 98f02b0b2fe7f19148ef8f40e658ddef06fda83e
