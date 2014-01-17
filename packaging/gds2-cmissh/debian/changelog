@@ -1,3 +1,12 @@
+gds2-cmissh (0.5.133-4) unstable; urgency=low
+
+  * gitrev: 225e228531559bd1be921c6b389250cbbef55ce3
+    Ignore generated files
+  * gitrev: c14ae1b5caa330202ce2c5d140e1dd56a86f097f
+    Moved scripts/cmissh to correct subdir
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 17 Jan 2014 11:33:30 +0100
+
 gds2-cmissh (0.5.132-4) unstable; urgency=low
 
   * gitrev: 54fc566c1c7ea4e776ab71061412e6ff929d9790

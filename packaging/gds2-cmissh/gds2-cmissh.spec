@@ -1,4 +1,4 @@
-%global ver 0.5.132
+%global ver 0.5.133
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,11 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.133-1
+- gitrev: 225e228531559bd1be921c6b389250cbbef55ce3
+  Ignore generated files
+- gitrev: c14ae1b5caa330202ce2c5d140e1dd56a86f097f
+  Moved scripts/cmissh to correct subdir
 * Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.132-1
 - gitrev: 54fc566c1c7ea4e776ab71061412e6ff929d9790
   Fixed a typo, jenkins hook test
