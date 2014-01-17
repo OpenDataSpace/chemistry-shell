@@ -1,4 +1,4 @@
-%global ver 0.5.3
+%global ver 0.5.128
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 17 2014 Build System <gds2dev@dataspace.cc> - 0.5.128-1
+- Automated rebuild
 * Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.3-1
 - gitrev: f2494ca6e709da20f9278a6d5d7c72823ed247d4
   Added iscc-based installer
