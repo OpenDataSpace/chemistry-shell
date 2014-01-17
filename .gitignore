@@ -1,4 +1,6 @@
 *.swp
+run.sh
+scripts/cmissh.bat
 target/
 packaging/noarch
 packaging/*.deb
