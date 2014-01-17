@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.134-4) unstable; urgency=low
+
+  * gitrev: 2e5661ed7cc2b62453d5b564a7dd2e1b00ce5314
+    Fixed subst variable name
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 17 Jan 2014 11:51:48 +0100
+
 gds2-cmissh (0.5.133-4) unstable; urgency=low
 
   * gitrev: 225e228531559bd1be921c6b389250cbbef55ce3
