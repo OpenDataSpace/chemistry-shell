@@ -79,9 +79,22 @@ begin
   Result := b and (CompareText(s, '1.6') >= 0);
 end;
 
+function RemoveOldWixInstall(): Boolean;
+var b: Boolean;
+var s: String;
+var ret: Integer;
+begin
+    Result := True;
+    b := RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#=APPIDSTR}', 'UninstallString', s);
+    if b and (Pos('msiexec', Lowercase(s)) > 0) then begin
+        SuppressibleMsgBox('An old MSI-based installation was detected and must be removed.', mbError, MB_OK, IDOK);
+        Result := Exec('msiexec.exe', '/qn /x {#=APPIDSTR}', '', SW_HIDE, ewWaitUntilTerminated, ret);
+    end;
+end;
+
 function InitializeSetup(): Boolean;
 begin
-  Result := True;
+  Result := RemoveOldWixInstall();
   if not IsJavaInstalled() then begin
     SuppressibleMsgBox('Java is not installed. Please install JRE 1.6 or later.', mbError, MB_OK, IDOK);
     Result := False;
