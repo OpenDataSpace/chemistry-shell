@@ -2,4 +2,4 @@
 
 LIB_DIR=.
 
-exec java ${JAVA_OPTS} -jar "${LIB_DIR}/chemistry-shell-${package.version}.jar" "$@"
+exec java ${JAVA_OPTS} -jar "${LIB_DIR}/chemistry-shell-${project.version}.jar" "$@"
