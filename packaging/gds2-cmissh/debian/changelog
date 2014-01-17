@@ -1,3 +1,16 @@
+gds2-cmissh (0.5.131-4) unstable; urgency=low
+
+  * gitrev: 4af1768fc2e2e3b7577e08468607d9f63a158a23
+    Specify includes for versions:use-latest-versions in pom.xml
+  * gitrev: a9df5c71ee8baaaaca74456d7a89520c7c1b46bc
+    Ignore generated files
+  * gitrev: 44bc36145e92cbb5052bc4e3789e80988ab2e060
+    Use maven-rsource-plugin to generate scripts
+  * gitrev: 0b48532391886c2d2206ad84f6806bf646ead002
+    Remove old wixInstall
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 17 Jan 2014 11:01:32 +0100
+
 gds2-cmissh (0.5.130-4) unstable; urgency=low
 
   * Automated rebuild

@@ -1,4 +1,4 @@
-%global ver 0.5.130
+%global ver 0.5.131
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,15 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.131-1
+- gitrev: 4af1768fc2e2e3b7577e08468607d9f63a158a23
+  Specify includes for versions:use-latest-versions in pom.xml
+- gitrev: a9df5c71ee8baaaaca74456d7a89520c7c1b46bc
+  Ignore generated files
+- gitrev: 44bc36145e92cbb5052bc4e3789e80988ab2e060
+  Use maven-rsource-plugin to generate scripts
+- gitrev: 0b48532391886c2d2206ad84f6806bf646ead002
+  Remove old wixInstall
 * Fri Jan 17 2014 Build System <gds2dev@dataspace.cc> - 0.5.130-1
 - Automated rebuild
 * Fri Jan 17 2014 Build System <gds2dev@dataspace.cc> - 0.5.128-1
