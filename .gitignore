@@ -1,1 +1,6 @@
 target/
+packaging/noarch
+packaging/*.deb
+packaging/*.changes
+packaging/*upload
+packaging/gds2-cmissh/cmissh

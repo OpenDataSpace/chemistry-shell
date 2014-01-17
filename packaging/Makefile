@@ -28,4 +28,4 @@ clean:
 	@set -e; for d in $(SUBDIRS) ; do \
 		$(MAKE) -C $$d clean ; \
 	done
-	rm -f *.deb *.changes *.upload
+	rm -rf *.deb *.changes *.upload noarch
