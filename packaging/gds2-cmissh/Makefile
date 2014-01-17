@@ -13,7 +13,7 @@ clean:
 install: $(BASEDIR)/target/$(JARFILE) $(SHELLSCRIPT)
 	install -d $(DESTDIR)/usr/share/java
 	install -d $(DESTDIR)/usr/bin
-	install -m 0644 $< $(DESTDIR)/usr/share/java/chemistry-shell.jar
+	install -m 0644 $< $(DESTDIR)/usr/share/java/
 	install -m 0755 $(SHELLSCRIPT) $(DESTDIR)/usr/bin
 
 $(SHELLSCRIPT): $(BASEDIR)/scripts/$(SHELLSCRIPT)
