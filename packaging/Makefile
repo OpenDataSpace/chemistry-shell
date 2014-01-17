@@ -22,10 +22,11 @@ build:
 		$(MAKE) -C $$d buildnumber ; \
 		cd $$d && dpkg-buildpackage -d -b -tc -us -uc && \
 		rpmbuild -bb --define "gds2root `pwd`" --define "_rpmdir $(TOPDIR)" $$d.spec ; \
+		cd $(TOPDIR) && iscc -DAPPVERSION=$(VERSION) -DBASEDIR=.. cmissh.iss ; \
 	done
 
 clean:
 	@set -e; for d in $(SUBDIRS) ; do \
 		$(MAKE) -C $$d clean ; \
 	done
-	rm -rf *.deb *.changes *.upload noarch
+	rm -rf *.deb *.changes *.upload *.exe noarch

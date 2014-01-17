@@ -1,6 +1,8 @@
+*.swp
 target/
 packaging/noarch
 packaging/*.deb
 packaging/*.changes
 packaging/*upload
+packaging/*.exe
 packaging/gds2-cmissh/cmissh
