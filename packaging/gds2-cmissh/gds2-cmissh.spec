@@ -1,4 +1,4 @@
-%global ver 0.5.131
+%global ver 0.5.132
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.132-1
+- gitrev: 54fc566c1c7ea4e776ab71061412e6ff929d9790
+  Fixed a typo, jenkins hook test
 * Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.131-1
 - gitrev: 4af1768fc2e2e3b7577e08468607d9f63a158a23
   Specify includes for versions:use-latest-versions in pom.xml

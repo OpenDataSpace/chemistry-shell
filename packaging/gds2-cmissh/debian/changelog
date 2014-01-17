@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.132-4) unstable; urgency=low
+
+  * gitrev: 54fc566c1c7ea4e776ab71061412e6ff929d9790
+    Fixed a typo, jenkins hook test
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 17 Jan 2014 11:25:03 +0100
+
 gds2-cmissh (0.5.131-4) unstable; urgency=low
 
   * gitrev: 4af1768fc2e2e3b7577e08468607d9f63a158a23
