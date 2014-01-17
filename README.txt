@@ -163,7 +163,7 @@ a ':'
 
 Example: [targetFile:file?/tmp/some_file]
 
-Types parameters will be auto-completed with possible values when hiting tab
+Types parameters will be auto-completed with possible values when hitting tab
 key in shell.
 
 A complete example:
