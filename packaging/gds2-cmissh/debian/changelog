@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.135-4) unstable; urgency=low
+
+  * gitrev: 9eff78ee6306c7eb99229884aadb8ae8750e67cb
+    Store versioned jar on Linux
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 17 Jan 2014 11:59:07 +0100
+
 gds2-cmissh (0.5.134-4) unstable; urgency=low
 
   * gitrev: 2e5661ed7cc2b62453d5b564a7dd2e1b00ce5314

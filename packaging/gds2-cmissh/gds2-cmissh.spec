@@ -1,4 +1,4 @@
-%global ver 0.5.134
+%global ver 0.5.135
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.135-1
+- gitrev: 9eff78ee6306c7eb99229884aadb8ae8750e67cb
+  Store versioned jar on Linux
 * Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.134-1
 - gitrev: 2e5661ed7cc2b62453d5b564a7dd2e1b00ce5314
   Fixed subst variable name
