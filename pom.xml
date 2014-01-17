@@ -138,6 +138,29 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <id>packaging</id>
+            <inherited>false</inherited>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>make</executable>
+          <workingDirectory>packaging</workingDirectory>
+          <arguments>
+            <argument>BASEDIR=${basedir}</argument>
+            <argument>VERSION=${project.version}</argument>
+            <argument>dist</argument>
+          </arguments>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

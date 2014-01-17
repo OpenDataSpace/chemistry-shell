@@ -1,0 +1,13 @@
+Source: gds2-cmissh
+Section: non-free/web
+Priority: extra
+Maintainer: Fritz Elfert <fritz.elfert@graudata.com>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.1
+Homepage: http://www.graudata.com
+
+Package: gds2-cmissh
+Architecture: all
+Depends: gds2-oraclejava7 | openjdk-6-jdk | openjdk-6-jre | openjdk-7-jdk | openjdk-7-jre | gcj-jre
+Description: Apache chemistry CMIS shell
+ This package provides a shell for accessing CMIS repositories
