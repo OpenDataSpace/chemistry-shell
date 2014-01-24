@@ -1,3 +1,12 @@
+gds2-cmissh (0.5.137-4) unstable; urgency=low
+
+  * gitrev: 1f588ae21f76a0e4e003eea4ca3b46289d7bfe00
+    Merge branch 'dev'
+  * gitrev: bf93bd8b56cdff97556c1e7be5bfa2afb6f5b522
+    Added mimetype field to put command
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Fri, 24 Jan 2014 18:40:36 +0100
+
 gds2-cmissh (0.5.136-4) unstable; urgency=low
 
   * Automated rebuild
