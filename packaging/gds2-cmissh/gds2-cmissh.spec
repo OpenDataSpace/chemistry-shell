@@ -1,4 +1,4 @@
-%global ver 0.5.136
+%global ver 0.5.137
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,11 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 24 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.137-1
+- gitrev: 1f588ae21f76a0e4e003eea4ca3b46289d7bfe00
+  Merge branch 'dev'
+- gitrev: bf93bd8b56cdff97556c1e7be5bfa2afb6f5b522
+  Added mimetype field to put command
 * Fri Jan 24 2014 Build System <gds2dev@dataspace.cc> - 0.5.136-1
 - Automated rebuild
 * Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.135-1
