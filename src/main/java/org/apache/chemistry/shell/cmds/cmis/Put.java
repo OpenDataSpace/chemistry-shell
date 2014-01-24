@@ -37,6 +37,7 @@ import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
+import org.apache.chemistry.shell.util.MimeTypeHelper;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.SimpleCreator;
 
@@ -57,9 +58,6 @@ public class Put extends ChemistryCommand {
 			typeName = "cmis:document";
 		}
 		String mimeType = cmdLine.getParameterValue("-m");
-		if(mimeType == null) {
-			mimeType = "text/plain";
-		}
 
 		Context targetCtx = app.resolveContext(new Path(target));
 		// Create document if it doesn't exist
@@ -68,6 +66,9 @@ public class Put extends ChemistryCommand {
 			Folder folder = currentCtx.as(Folder.class);
 			if (folder != null) {
 				File file = app.resolveFile(source);
+				if(mimeType == null) {
+					mimeType = MimeTypeHelper.getMimeType(file.getName());
+				}
 				FileInputStream in = new FileInputStream(file);
 				try {
 //					if (currentCtx instanceof ChemistryContext) {
