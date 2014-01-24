@@ -1,4 +1,4 @@
-%global ver 0.5.135
+%global ver 0.5.136
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 24 2014 Build System <gds2dev@dataspace.cc> - 0.5.136-1
+- Automated rebuild
 * Fri Jan 17 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.135-1
 - gitrev: 9eff78ee6306c7eb99229884aadb8ae8750e67cb
   Store versioned jar on Linux
