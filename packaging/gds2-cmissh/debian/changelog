@@ -1,3 +1,12 @@
+gds2-cmissh (0.5.138-4) unstable; urgency=low
+
+  * gitrev: d6b1c678355702df41db7dd7c45eab9bb8284652
+    Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+  * gitrev: ece9e06dae909c42d6f7d69df824fa56762e92cb
+    Added automatic mimetype detection to put command
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Fri, 24 Jan 2014 20:15:57 +0100
+
 gds2-cmissh (0.5.137-4) unstable; urgency=low
 
   * gitrev: 1f588ae21f76a0e4e003eea4ca3b46289d7bfe00

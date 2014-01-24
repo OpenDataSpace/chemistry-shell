@@ -1,4 +1,4 @@
-%global ver 0.5.137
+%global ver 0.5.138
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,11 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Jan 24 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.138-1
+- gitrev: d6b1c678355702df41db7dd7c45eab9bb8284652
+  Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+- gitrev: ece9e06dae909c42d6f7d69df824fa56762e92cb
+  Added automatic mimetype detection to put command
 * Fri Jan 24 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.137-1
 - gitrev: 1f588ae21f76a0e4e003eea4ca3b46289d7bfe00
   Merge branch 'dev'
