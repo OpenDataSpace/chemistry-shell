@@ -40,7 +40,7 @@ import org.apache.chemistry.shell.command.CommandLine;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.SimpleCreator;
 
-@Cmd(syntax = "put [-t|--type:*] source:file [target:item]", synopsis = "Uploads the stream of the target document")
+@Cmd(syntax = "put [-t|--type:*] [-m|--mimetype:*] source:file [target:item]", synopsis = "Uploads the stream of the target document")
 public class Put extends ChemistryCommand {
 
 	@Override
@@ -55,6 +55,10 @@ public class Put extends ChemistryCommand {
 		String typeName = cmdLine.getParameterValue("-t");
 		if (typeName == null) {
 			typeName = "cmis:document";
+		}
+		String mimeType = cmdLine.getParameterValue("-m");
+		if(mimeType == null) {
+			mimeType = "text/plain";
 		}
 
 		Context targetCtx = app.resolveContext(new Path(target));
@@ -72,7 +76,7 @@ public class Put extends ChemistryCommand {
 //					}
 					ContentStream stream = new ContentStreamImpl(
 							file.getName(), BigInteger.valueOf(file.length()),
-							"text/plain", in);
+							mimeType, in);
 					new SimpleCreator(folder).createFile(typeName, target,
 							stream);
 				} finally {
