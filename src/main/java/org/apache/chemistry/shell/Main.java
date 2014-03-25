@@ -49,6 +49,7 @@ public class Main {
 	boolean testMode;
 	boolean enableTime = false;
 	boolean useJSONBinding = false;
+	boolean useCompression = false;
 	String command;
 	private ChemistryApp app;
 
@@ -105,6 +106,8 @@ public class Main {
 					url = arg;
 				} else if ("-j".equals(arg)) { // use json binding
 					useJSONBinding = true;
+				} else if ("--compression".equals(arg)) { // use compression
+					useCompression = true;
 				} else if ("--version".equals(arg)){ // print actual version
 					version();
 					System.exit(0);
@@ -151,9 +154,9 @@ public class Main {
 
 	public void run() throws Exception {
 		if (this.useJSONBinding) {
-			app = new ChemistryApp(BindingType.BROWSER);
+			app = new ChemistryApp(BindingType.BROWSER, useCompression);
 		} else {
-			app = new ChemistryApp();
+			app = new ChemistryApp(BindingType.ATOMPUB, useCompression);
 		}
 		if (username != null) {
 			app.login(username,

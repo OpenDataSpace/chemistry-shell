@@ -56,17 +56,19 @@ public class ChemistryApp extends AbstractApplication {
 	private SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
 	private List<Repository> repos;
 	private BindingType bindingType;
+	private boolean compression = false;
 
 	public List<Repository> getRepositories() {
 		return repos;
 	}
 
 	public ChemistryApp() {
-		this(BindingType.ATOMPUB);
+		this(BindingType.ATOMPUB, false);
 	}
 
-	public ChemistryApp(BindingType bindingType) {
+	public ChemistryApp(BindingType bindingType, boolean compression) {
 		this.bindingType = bindingType;
+		this.compression = compression;
 		registry.registerCommand(new DumpTree());
 		registry.registerCommand(new SetProp());
 		registry.registerCommand(new PropGet());
@@ -99,6 +101,9 @@ public class ChemistryApp extends AbstractApplication {
 		}
 		parameters.put(SessionParameter.BINDING_TYPE, bindingType.value());
 		parameters.put(SessionParameter.COOKIES, Boolean.TRUE.toString());
+		if (compression) {
+			parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+		}
 		try {
 			this.repos = sessionFactory.getRepositories(parameters);
 		} catch (CmisPermissionDeniedException e) {

@@ -99,9 +99,9 @@ public class CompatibilityIT {
 	@Before
 	public void setUp() throws Exception {
 		if (bindingType.equals(BindingType.BROWSER.value())) {
-			app = new ChemistryApp(BindingType.BROWSER);
+			app = new ChemistryApp(BindingType.BROWSER, false);
 		} else {
-			app = new ChemistryApp();
+			app = new ChemistryApp(BindingType.ATOMPUB, false);
 		}
 		app.login(username, password.toCharArray());
 		app.connect(url);
