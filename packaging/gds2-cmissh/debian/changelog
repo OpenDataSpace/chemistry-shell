@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.139-4) unstable; urgency=low
+
+  * gitrev: c1d6a20ff538f866db36b152b0511c5152f2a9a4
+    Added compression support flag to application
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 25 Mar 2014 14:34:08 +0100
+
 gds2-cmissh (0.5.138-4) unstable; urgency=low
 
   * gitrev: d6b1c678355702df41db7dd7c45eab9bb8284652

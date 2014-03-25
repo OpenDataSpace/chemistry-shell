@@ -1,4 +1,4 @@
-%global ver 0.5.138
+%global ver 0.5.139
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue Mar 25 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.139-1
+- gitrev: c1d6a20ff538f866db36b152b0511c5152f2a9a4
+  Added compression support flag to application
 * Fri Jan 24 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.138-1
 - gitrev: d6b1c678355702df41db7dd7c45eab9bb8284652
   Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
