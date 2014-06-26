@@ -1,4 +1,4 @@
-%global ver 0.5.146
+%global ver 0.5.147
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,11 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Thu Jun 26 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.147-1
+- gitrev: 60f7509e698511946aaca0667d5f7b326fbf3c49
+  Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+- gitrev: 141b9cc6e3dc682663be3db8dc0ae024973df447
+  Added the possibility to disable SSL certificate verification
 * Mon Jun 23 2014 Build System <gds2dev@dataspace.cc> - 0.5.146-1
 - Automated rebuild
 * Wed Jun  4 2014 Build System <gds2dev@dataspace.cc> - 0.5.145-1
