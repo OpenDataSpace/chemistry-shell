@@ -29,7 +29,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
@@ -108,9 +115,11 @@ public class Main {
 					useJSONBinding = true;
 				} else if ("--compression".equals(arg)) { // use compression
 					useCompression = true;
-				} else if ("--version".equals(arg)){ // print actual version
+				} else if ("--version".equals(arg)) { // print actual version
 					version();
 					System.exit(0);
+				} else if ("--insecure".equals(arg)) {
+					acceptSelfSignedCertificates();
 				} else {
 					System.err.println("Skipping unknown argument: " + arg);
 				}
@@ -245,5 +254,30 @@ public class Main {
 		String help = IOUtils.toString(url.openStream());
 		System.out.print(help);
 	}
+	
+	private static void acceptSelfSignedCertificates() {
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			
+			public X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+			
+			public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+					throws CertificateException {
+			}
+			
+			public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+					throws CertificateException {
+			}
+		}};
 
+		try {
+			SSLContext sc = SSLContext.getInstance("SSL");
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
 }
