@@ -1,3 +1,19 @@
+gds2-cmissh (0.5.148-4) unstable; urgency=low
+
+  * gitrev: d32beded55e3d9cae90f1ac9ea4caf245f8dd454
+    Update maven plugins and dependencies
+
+ -- Achim Derigs <achim.derigs@graudata.com>  Mon, 30 Jun 2014 09:13:46 +0200
+
+gds2-cmissh (0.5.147-4) unstable; urgency=low
+
+  * gitrev: 60f7509e698511946aaca0667d5f7b326fbf3c49
+    Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+  * gitrev: 141b9cc6e3dc682663be3db8dc0ae024973df447
+    Added the possibility to disable SSL certificate verification
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 26 Jun 2014 16:57:06 +0200
+
 gds2-cmissh (0.5.146-4) unstable; urgency=low
 
   * Automated rebuild
