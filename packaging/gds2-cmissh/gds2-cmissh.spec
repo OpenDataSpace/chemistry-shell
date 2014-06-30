@@ -1,4 +1,4 @@
-%global ver 0.5.147
+%global ver 0.5.148
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Mon Jun 30 2014 Achim Derigs <achim.derigs@graudata.com> - 0.5.148-1
+- gitrev: d32beded55e3d9cae90f1ac9ea4caf245f8dd454
+  Update maven plugins and dependencies
 * Thu Jun 26 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.147-1
 - gitrev: 60f7509e698511946aaca0667d5f7b326fbf3c49
   Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
