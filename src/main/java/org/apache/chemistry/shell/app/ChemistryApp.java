@@ -105,7 +105,7 @@ public class ChemistryApp extends AbstractApplication {
 		parameters.put(SessionParameter.COOKIES, Boolean.TRUE.toString());
 		if (compression) {
 			parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
-			parameters.put(SessionParameter.CLIENT_COMPRESSION, Boolean.TRUE.toString());
+//			parameters.put(SessionParameter.CLIENT_COMPRESSION, Boolean.TRUE.toString());
 		}
 		try {
 			this.repos = sessionFactory.getRepositories(parameters);
