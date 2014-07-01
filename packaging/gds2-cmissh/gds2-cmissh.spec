@@ -1,4 +1,4 @@
-%global ver 0.5.150
+%global ver 0.5.151
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue Jul  1 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.151-1
+- gitrev: 56d8d14c8e9921de5bee1b4625367a7ae957765c
+  Added --compression description to usage message
 * Tue Jul  1 2014 Build System <gds2dev@dataspace.cc> - 0.5.150-1
 - Automated rebuild
 * Mon Jun 30 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.149-1
