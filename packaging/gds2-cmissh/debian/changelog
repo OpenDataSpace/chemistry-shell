@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.152-4) unstable; urgency=low
+
+  * gitrev: 2e87dc57d3a90a962ee71a71b1bee906728b1ad9
+    Added client compression flag if using compression
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 1 Jul 2014 15:42:16 +0200
+
 gds2-cmissh (0.5.151-4) unstable; urgency=low
 
   * gitrev: 56d8d14c8e9921de5bee1b4625367a7ae957765c
