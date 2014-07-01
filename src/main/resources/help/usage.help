@@ -35,6 +35,9 @@ OPTIONS
       -u username
               Specifies username to connect to server.
 
+      --compression
+              Enables HTTP compression
+
       --insecure
               Disables SSL certificate verification.
 
