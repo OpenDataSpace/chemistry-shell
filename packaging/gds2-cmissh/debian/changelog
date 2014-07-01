@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.154-4) unstable; urgency=low
+
+  * gitrev: 252ac1ff0235f8e29e9780308f79fbc6d06f80b1
+    Removed client compression
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 1 Jul 2014 16:05:10 +0200
+
 gds2-cmissh (0.5.152-4) unstable; urgency=low
 
   * gitrev: 2e87dc57d3a90a962ee71a71b1bee906728b1ad9

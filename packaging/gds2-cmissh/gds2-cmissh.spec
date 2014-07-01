@@ -1,4 +1,4 @@
-%global ver 0.5.152
+%global ver 0.5.154
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue Jul  1 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.154-1
+- gitrev: 252ac1ff0235f8e29e9780308f79fbc6d06f80b1
+  Removed client compression
 * Tue Jul  1 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.152-1
 - gitrev: 2e87dc57d3a90a962ee71a71b1bee906728b1ad9
   Added client compression flag if using compression
