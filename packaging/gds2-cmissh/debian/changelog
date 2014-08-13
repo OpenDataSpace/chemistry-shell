@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.161-4) unstable; urgency=low
+
+  * gitrev: b5d642846a67afd672d2c6896895d4ddcbd1a991
+    Added the possibility to set a dummy stream
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Wed, 13 Aug 2014 19:03:41 +0200
+
 gds2-cmissh (0.5.160-4) unstable; urgency=low
 
   * Automated rebuild

@@ -1,4 +1,4 @@
-%global ver 0.5.160
+%global ver 0.5.161
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Wed Aug 13 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.161-1
+- gitrev: b5d642846a67afd672d2c6896895d4ddcbd1a991
+  Added the possibility to set a dummy stream
 * Fri Aug  1 2014 Build System <gds2dev@dataspace.cc> - 0.5.160-1
 - Automated rebuild
 * Thu Jul 31 2014 Build System <gds2dev@dataspace.cc> - 0.5.159-1
