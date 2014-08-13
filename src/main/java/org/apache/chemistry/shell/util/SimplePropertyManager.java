@@ -126,4 +126,9 @@ public class SimplePropertyManager {
 		}
 	}
 
+	public void setDummyStream(String name, DummyFileType dummyType, long size)
+			throws Exception {
+		DummyInputStream in = new DummyInputStream(size, dummyType);
+		this.setStream(in, size, name);
+	}
 }
