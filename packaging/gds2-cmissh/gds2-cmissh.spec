@@ -1,4 +1,4 @@
-%global ver 0.5.166
+%global ver 0.5.167
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,13 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Sun Oct  5 2014 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.167-1
+- gitrev: 7cebd6d3d96379967e65cc03798a20ac1aa1babb
+  Add license file for windows version
+- gitrev: d154b7d783f4f17a10d8557c7349e98134e992a2
+  Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+- gitrev: 28f6cef6c92fbfb73950b40709b454db5aededd0
+  Switch dependency from gds2-oraclejava to gds2-java
 * Tue Sep 30 2014 Build System <gds2dev@dataspace.cc> - 0.5.166-1
 - Automated rebuild
 * Thu Sep 18 2014 Build System <gds2dev@dataspace.cc> - 0.5.165-1

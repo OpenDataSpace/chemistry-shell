@@ -1,3 +1,14 @@
+gds2-cmissh (0.5.167-4) unstable; urgency=low
+
+  * gitrev: 7cebd6d3d96379967e65cc03798a20ac1aa1babb
+    Add license file for windows version
+  * gitrev: d154b7d783f4f17a10d8557c7349e98134e992a2
+    Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+  * gitrev: 28f6cef6c92fbfb73950b40709b454db5aededd0
+    Switch dependency from gds2-oraclejava to gds2-java
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Sun, 5 Oct 2014 22:08:09 +0200
+
 gds2-cmissh (0.5.166-4) unstable; urgency=low
 
   * Automated rebuild
