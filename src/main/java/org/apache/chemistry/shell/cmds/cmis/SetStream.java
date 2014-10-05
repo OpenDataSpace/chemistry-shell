@@ -34,10 +34,11 @@ import org.apache.chemistry.shell.app.Context;
 import org.apache.chemistry.shell.command.Cmd;
 import org.apache.chemistry.shell.command.CommandException;
 import org.apache.chemistry.shell.command.CommandLine;
+import org.apache.chemistry.shell.util.DummyFileType;
 import org.apache.chemistry.shell.util.Path;
 import org.apache.chemistry.shell.util.SimplePropertyManager;
 
-@Cmd(syntax="setstream target:item filename:file", synopsis="Set the given file content as a stream on the current context object")
+@Cmd(syntax="setstream target:item [--zero] [--one] [--text] [--random] [-s|--size:*] [filename:file]", synopsis="Set the given file content as a stream on the current context object")
 public class SetStream extends ChemistryCommand {
 
     @Override
@@ -46,7 +47,21 @@ public class SetStream extends ChemistryCommand {
 
         String target = cmdLine.getParameterValue("target");
         String filename = cmdLine.getParameterValue("filename");
-
+        DummyFileType dummyType = DummyFileType.ZEROS;
+        if(cmdLine.getParameter("--zero") != null)
+        	dummyType = DummyFileType.ZEROS;
+        else if(cmdLine.getParameter("--one") != null)
+        	dummyType = DummyFileType.ONES;
+        else if(cmdLine.getParameter("--text") != null)
+        	dummyType = DummyFileType.TEXT;
+        else if(cmdLine.getParameter("--random") != null)
+        	dummyType = DummyFileType.RANDOM;
+        long size = -1;
+        if(cmdLine.getParameterValue("-s")!=null) {
+        	size = Long.parseLong(cmdLine.getParameterValue("-s"));
+        } else if(filename==null) {
+        	throw new CommandException("Missing filename");
+        }
         Context ctx = app.resolveContext(new Path(target));
         CmisObject obj = ctx.as(CmisObject.class);
 
@@ -54,13 +69,17 @@ public class SetStream extends ChemistryCommand {
             throw new CommandException("Cannot resolve "+target);
         }
 
-        File file = app.resolveFile(filename);
-        FileInputStream in = new FileInputStream(file);
-        try {
-            new SimplePropertyManager(obj).setStream(in, file.length(), file.getName());
-        } finally {
-            in.close();
-        }
+        if(size < 0) {
+        	File file = app.resolveFile(filename);
+        	FileInputStream in = new FileInputStream(file);
+        	try {
+        		new SimplePropertyManager(obj).setStream(in, file.length(), file.getName());
+        	} finally {
+            	in.close();
+        	}
+        } else {
+    		new SimplePropertyManager(obj).setDummyStream(obj.getName(), dummyType, size);
+    	}
     }
 
 }

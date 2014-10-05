@@ -35,6 +35,12 @@ OPTIONS
       -u username
               Specifies username to connect to server.
 
+      --compression
+              Enables HTTP compression
+
+      --insecure
+              Disables SSL certificate verification.
+
 SEE ALSO
       Type 'cmissh help' or 'help' in interactive mode for the list
       of available commands.

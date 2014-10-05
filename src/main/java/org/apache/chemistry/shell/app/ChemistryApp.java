@@ -44,6 +44,7 @@ import org.apache.chemistry.shell.cmds.cmis.PropGet;
 import org.apache.chemistry.shell.cmds.cmis.Put;
 import org.apache.chemistry.shell.cmds.cmis.Query;
 import org.apache.chemistry.shell.cmds.cmis.Remove;
+import org.apache.chemistry.shell.cmds.cmis.RenditionFilter;
 import org.apache.chemistry.shell.cmds.cmis.SetProp;
 import org.apache.chemistry.shell.cmds.cmis.SetStream;
 
@@ -81,6 +82,7 @@ public class ChemistryApp extends AbstractApplication {
 		registry.registerCommand(new Cat());
 		registry.registerCommand(new Put());
 		registry.registerCommand(new Query());
+		registry.registerCommand(new RenditionFilter());
 	}
 
 	@Override
@@ -103,6 +105,7 @@ public class ChemistryApp extends AbstractApplication {
 		parameters.put(SessionParameter.COOKIES, Boolean.TRUE.toString());
 		if (compression) {
 			parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+//			parameters.put(SessionParameter.CLIENT_COMPRESSION, Boolean.TRUE.toString());
 		}
 		try {
 			this.repos = sessionFactory.getRepositories(parameters);

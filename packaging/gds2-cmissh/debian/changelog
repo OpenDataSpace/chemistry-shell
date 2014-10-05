@@ -1,3 +1,128 @@
+gds2-cmissh (0.5.166-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 30 Sep 2014 12:36:07 +0200
+
+gds2-cmissh (0.5.165-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 18 Sep 2014 22:08:11 +0200
+
+gds2-cmissh (0.5.164-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 16 Sep 2014 09:31:30 +0200
+
+gds2-cmissh (0.5.163-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 28 Aug 2014 15:40:59 +0200
+
+gds2-cmissh (0.5.162-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 21 Aug 2014 10:42:56 +0200
+
+gds2-cmissh (0.5.161-4) unstable; urgency=low
+
+  * gitrev: b5d642846a67afd672d2c6896895d4ddcbd1a991
+    Added the possibility to set a dummy stream
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Wed, 13 Aug 2014 19:03:41 +0200
+
+gds2-cmissh (0.5.160-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Fri, 01 Aug 2014 17:08:54 +0200
+
+gds2-cmissh (0.5.159-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 31 Jul 2014 21:30:36 +0200
+
+gds2-cmissh (0.5.158-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 31 Jul 2014 11:13:25 +0200
+
+gds2-cmissh (0.5.157-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Mon, 21 Jul 2014 16:37:19 +0200
+
+gds2-cmissh (0.5.156-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Wed, 16 Jul 2014 16:46:55 +0200
+
+gds2-cmissh (0.5.155-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 08 Jul 2014 18:24:03 +0200
+
+gds2-cmissh (0.5.154-4) unstable; urgency=low
+
+  * gitrev: 252ac1ff0235f8e29e9780308f79fbc6d06f80b1
+    Removed client compression
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 1 Jul 2014 16:05:10 +0200
+
+gds2-cmissh (0.5.152-4) unstable; urgency=low
+
+  * gitrev: 2e87dc57d3a90a962ee71a71b1bee906728b1ad9
+    Added client compression flag if using compression
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 1 Jul 2014 15:42:16 +0200
+
+gds2-cmissh (0.5.151-4) unstable; urgency=low
+
+  * gitrev: 56d8d14c8e9921de5bee1b4625367a7ae957765c
+    Added --compression description to usage message
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 1 Jul 2014 15:15:04 +0200
+
+gds2-cmissh (0.5.150-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 01 Jul 2014 12:58:41 +0200
+
+gds2-cmissh (0.5.149-4) unstable; urgency=low
+
+  * gitrev: 0e70a80e79bd18961da916fec04aec22201d0c83
+    Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+  * gitrev: bbf9ea9ab6d600ee1f21b7276878f59ce1a1e1f6
+    Added rendition filter set and get operation to default context
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Mon, 30 Jun 2014 09:55:27 +0200
+
+gds2-cmissh (0.5.148-4) unstable; urgency=low
+
+  * gitrev: d32beded55e3d9cae90f1ac9ea4caf245f8dd454
+    Update maven plugins and dependencies
+
+ -- Achim Derigs <achim.derigs@graudata.com>  Mon, 30 Jun 2014 09:13:46 +0200
+
+gds2-cmissh (0.5.147-4) unstable; urgency=low
+
+  * gitrev: 60f7509e698511946aaca0667d5f7b326fbf3c49
+    Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+  * gitrev: 141b9cc6e3dc682663be3db8dc0ae024973df447
+    Added the possibility to disable SSL certificate verification
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Thu, 26 Jun 2014 16:57:06 +0200
+
 gds2-cmissh (0.5.146-4) unstable; urgency=low
 
   * Automated rebuild

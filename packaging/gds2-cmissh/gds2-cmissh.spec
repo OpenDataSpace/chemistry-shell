@@ -1,4 +1,4 @@
-%global ver 0.5.146
+%global ver 0.5.166
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,55 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue Sep 30 2014 Build System <gds2dev@dataspace.cc> - 0.5.166-1
+- Automated rebuild
+* Thu Sep 18 2014 Build System <gds2dev@dataspace.cc> - 0.5.165-1
+- Automated rebuild
+* Tue Sep 16 2014 Build System <gds2dev@dataspace.cc> - 0.5.164-1
+- Automated rebuild
+* Thu Aug 28 2014 Build System <gds2dev@dataspace.cc> - 0.5.163-1
+- Automated rebuild
+* Thu Aug 21 2014 Build System <gds2dev@dataspace.cc> - 0.5.162-1
+- Automated rebuild
+* Wed Aug 13 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.161-1
+- gitrev: b5d642846a67afd672d2c6896895d4ddcbd1a991
+  Added the possibility to set a dummy stream
+* Fri Aug  1 2014 Build System <gds2dev@dataspace.cc> - 0.5.160-1
+- Automated rebuild
+* Thu Jul 31 2014 Build System <gds2dev@dataspace.cc> - 0.5.159-1
+- Automated rebuild
+* Thu Jul 31 2014 Build System <gds2dev@dataspace.cc> - 0.5.158-1
+- Automated rebuild
+* Mon Jul 21 2014 Build System <gds2dev@dataspace.cc> - 0.5.157-1
+- Automated rebuild
+* Wed Jul 16 2014 Build System <gds2dev@dataspace.cc> - 0.5.156-1
+- Automated rebuild
+* Tue Jul  8 2014 Build System <gds2dev@dataspace.cc> - 0.5.155-1
+- Automated rebuild
+* Tue Jul  1 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.154-1
+- gitrev: 252ac1ff0235f8e29e9780308f79fbc6d06f80b1
+  Removed client compression
+* Tue Jul  1 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.152-1
+- gitrev: 2e87dc57d3a90a962ee71a71b1bee906728b1ad9
+  Added client compression flag if using compression
+* Tue Jul  1 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.151-1
+- gitrev: 56d8d14c8e9921de5bee1b4625367a7ae957765c
+  Added --compression description to usage message
+* Tue Jul  1 2014 Build System <gds2dev@dataspace.cc> - 0.5.150-1
+- Automated rebuild
+* Mon Jun 30 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.149-1
+- gitrev: 0e70a80e79bd18961da916fec04aec22201d0c83
+  Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+- gitrev: bbf9ea9ab6d600ee1f21b7276878f59ce1a1e1f6
+  Added rendition filter set and get operation to default context
+* Mon Jun 30 2014 Achim Derigs <achim.derigs@graudata.com> - 0.5.148-1
+- gitrev: d32beded55e3d9cae90f1ac9ea4caf245f8dd454
+  Update maven plugins and dependencies
+* Thu Jun 26 2014 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.147-1
+- gitrev: 60f7509e698511946aaca0667d5f7b326fbf3c49
+  Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+- gitrev: 141b9cc6e3dc682663be3db8dc0ae024973df447
+  Added the possibility to disable SSL certificate verification
 * Mon Jun 23 2014 Build System <gds2dev@dataspace.cc> - 0.5.146-1
 - Automated rebuild
 * Wed Jun  4 2014 Build System <gds2dev@dataspace.cc> - 0.5.145-1
