@@ -1,3 +1,9 @@
+gds2-cmissh (0.5.168-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Mon, 13 Oct 2014 11:04:47 +0200
+
 gds2-cmissh (0.5.167-4) unstable; urgency=low
 
   * gitrev: 7cebd6d3d96379967e65cc03798a20ac1aa1babb
