@@ -1,3 +1,12 @@
+gds2-cmissh (0.5.176-4) unstable; urgency=low
+
+  * gitrev: 4a644391160944a044f29dd7df28b82bbf5400cf
+    Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
+  * gitrev: 7d1ac8ac31b25daf8e7308a38613f97b401f52dd
+    Added disabling the SNI Extension on insecure startup
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Mon, 26 Jan 2015 18:02:47 +0100
+
 gds2-cmissh (0.5.175-4) unstable; urgency=low
 
   * Automated rebuild
