@@ -120,6 +120,7 @@ public class Main {
 					System.exit(0);
 				} else if ("--insecure".equals(arg)) {
 					acceptSelfSignedCertificates();
+					System.setProperty("jsse.enableSNIExtension", "false");
 				} else {
 					System.err.println("Skipping unknown argument: " + arg);
 				}
