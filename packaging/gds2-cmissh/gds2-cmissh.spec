@@ -1,4 +1,4 @@
-%global ver 0.5.176
+%global ver 0.5.177
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Thu Jan 29 2015 Build System <gds2dev@dataspace.cc> - 0.5.177-1
+- Automated rebuild
 * Mon Jan 26 2015 Till Lorentzen <till.lorentzen@graudata.com> - 0.5.176-1
 - gitrev: 4a644391160944a044f29dd7df28b82bbf5400cf
   Merge branch 'master' of github.com:OpenDataSpace/chemistry-shell
