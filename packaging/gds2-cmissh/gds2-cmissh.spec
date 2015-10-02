@@ -1,4 +1,4 @@
-%global ver 0.5.195
+%global ver 0.5.196
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Oct  2 2015 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.196-1
+- gitrev: 61750d9245031ca4efc944a963d8fed20b4c9a01
+  Added missing push into CentOS-7 and SLES repos
 * Thu Sep 24 2015 Build System <gds2dev@dataspace.cc> - 0.5.195-1
 - Automated rebuild
 * Wed Sep 16 2015 Build System <gds2dev@dataspace.cc> - 0.5.194-1

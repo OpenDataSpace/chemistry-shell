@@ -1,3 +1,10 @@
+gds2-cmissh (0.5.196-4) unstable; urgency=low
+
+  * gitrev: 61750d9245031ca4efc944a963d8fed20b4c9a01
+    Added missing push into CentOS-7 and SLES repos
+
+ -- Fritz Elfert <fritz@fritz-elfert.de>  Fri, 2 Oct 2015 07:05:23 +0200
+
 gds2-cmissh (0.5.195-4) unstable; urgency=low
 
   * Automated rebuild
