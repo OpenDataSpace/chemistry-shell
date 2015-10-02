@@ -15,6 +15,8 @@ upload:
 	@set -e; for r in $(RPMFILES) ; do \
 		set -e; test -f $$r || (echo Missing $$r; exit 1) ; \
 		(set -e; echo "Uploading $$r" && rput -c rput.cf $$r) ; \
+		(set -e; echo "Uploading $$r" && rput -c r7put.cf $$r) ; \
+		(set -e; echo "Uploading $$r" && rput -c sput.cf $$r) ; \
 	done
 
 build:
