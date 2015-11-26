@@ -32,3 +32,14 @@ clean:
 		$(MAKE) -C $$d clean ; \
 	done
 	rm -rf *.deb *.changes *.upload *.exe noarch
+
+pre-integration-test: $(wildcard *.deb)
+ifneq ($(HOST),)
+	scp -o StrictHostKeyChecking=no -o CheckHostIP=no -p $^ $(HOST):
+	ssh -o StrictHostKeyChecking=no -o CheckHostIP=no $(HOST) sudo dpkg -i $^
+endif
+
+post-integration-test: $(wildcard *.deb)
+ifneq ($(HOST),)
+	ssh -o StrictHostKeyChecking=no -o CheckHostIP=no $(HOST) sudo rm $^
+endif
