@@ -1,4 +1,4 @@
-%global ver 0.5.196
+%global ver 0.5.201
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,13 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Thu Nov 26 2015 Achim Derigs <achim.derigs@graudata.com> - 0.5.201-1
+- gitrev: d8ad7803c0144c564a864de3a09256b4e3d90b1e
+  fixes SCM developer connection
+- gitrev: 6e1b82545c0c8e218d6189380a07d083b18ab90a
+  installs debian package on test host
+- gitrev: 8f23cf19d70acd02ce6130b4a0b4772af867f617
+  migrates to OpenStack Continuous Delivery
 * Fri Oct  2 2015 Fritz Elfert <fritz@fritz-elfert.de> - 0.5.196-1
 - gitrev: 61750d9245031ca4efc944a963d8fed20b4c9a01
   Added missing push into CentOS-7 and SLES repos
