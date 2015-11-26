@@ -1,3 +1,10 @@
+gds2-cmissh (0.6.202-4) unstable; urgency=low
+
+  * gitrev: dc65064e26b9e7715cba5b7ab3fa7b278714babd
+    increments minor version to 0.6
+
+ -- Achim Derigs <achim.derigs@graudata.com>  Thu, 26 Nov 2015 19:01:04 +0100
+
 gds2-cmissh (0.5.201-4) unstable; urgency=low
 
   * gitrev: d8ad7803c0144c564a864de3a09256b4e3d90b1e

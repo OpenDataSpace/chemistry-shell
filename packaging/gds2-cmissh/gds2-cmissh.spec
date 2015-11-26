@@ -1,4 +1,4 @@
-%global ver 0.5.201
+%global ver 0.6.202
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,9 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Thu Nov 26 2015 Achim Derigs <achim.derigs@graudata.com> - 0.6.202-1
+- gitrev: dc65064e26b9e7715cba5b7ab3fa7b278714babd
+  increments minor version to 0.6
 * Thu Nov 26 2015 Achim Derigs <achim.derigs@graudata.com> - 0.5.201-1
 - gitrev: d8ad7803c0144c564a864de3a09256b4e3d90b1e
   fixes SCM developer connection
