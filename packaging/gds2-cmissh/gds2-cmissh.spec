@@ -1,4 +1,4 @@
-%global ver 0.6.202
+%global ver 0.6.203
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue Dec  1 2015 Build System <gds2dev@dataspace.cc> - 0.6.203-1
+- Automated rebuild
 * Thu Nov 26 2015 Achim Derigs <achim.derigs@graudata.com> - 0.6.202-1
 - gitrev: dc65064e26b9e7715cba5b7ab3fa7b278714babd
   increments minor version to 0.6
