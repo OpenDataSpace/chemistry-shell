@@ -32,7 +32,7 @@
   <groupId>org.apache.chemistry</groupId>
   <artifactId>chemistry-shell</artifactId>
   <name>Chemistry Shell (aka CMIS Shell or cmissh)</name>
-  <version>0.6.205</version>
+  <version>0.6.206</version>
   <description>Command-line client using APP protocol binding for CMIS</description>
   <scm>
     <developerConnection>scm:git:git@github.com:OpenDataSpace/chemistry-shell.git</developerConnection>
@@ -56,7 +56,7 @@
     <dependency>
       <groupId>org.apache.chemistry.opencmis</groupId>
       <artifactId>chemistry-opencmis-client-impl</artifactId>
-      <version>0.13.1-180</version>
+      <version>0.13.1-183</version>
     </dependency>
 
     <dependency>
