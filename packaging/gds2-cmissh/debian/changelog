@@ -1,3 +1,10 @@
+gds2-cmissh (0.6.210-4) unstable; urgency=low
+
+  * gitrev: 491a80e733e6a05abd84aea734b320930f4428bc
+    Added absolute path to batch file => batch file can be executed from everywhere
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Fri, 26 Feb 2016 14:08:49 +0100
+
 gds2-cmissh (0.6.208-4) unstable; urgency=low
 
   * Automated rebuild
