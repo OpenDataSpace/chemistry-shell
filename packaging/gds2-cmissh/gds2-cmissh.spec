@@ -1,4 +1,4 @@
-%global ver 0.6.210
+%global ver 0.6.211
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue Mar 22 2016 Build System <gds2dev@dataspace.cc> - 0.6.211-1
+- Automated rebuild
 * Fri Feb 26 2016 Till Lorentzen <till.lorentzen@graudata.com> - 0.6.210-1
 - gitrev: 491a80e733e6a05abd84aea734b320930f4428bc
   Added absolute path to batch file => batch file can be executed from everywhere

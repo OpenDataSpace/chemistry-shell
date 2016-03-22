@@ -1,3 +1,9 @@
+gds2-cmissh (0.6.211-4) unstable; urgency=low
+
+  * Automated rebuild
+
+ -- Till Lorentzen <till.lorentzen@graudata.com>  Tue, 22 Mar 2016 18:41:34 +0100
+
 gds2-cmissh (0.6.210-4) unstable; urgency=low
 
   * gitrev: 491a80e733e6a05abd84aea734b320930f4428bc
