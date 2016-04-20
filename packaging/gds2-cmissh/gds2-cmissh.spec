@@ -1,4 +1,4 @@
-%global ver 0.6.212
+%global ver 0.6.214
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Wed Apr 20 2016 Build System <gds2dev@dataspace.cc> - 0.6.214-1
+- Automated rebuild
 * Thu Apr  7 2016 Build System <gds2dev@dataspace.cc> - 0.6.212-1
 - Automated rebuild
 * Tue Mar 22 2016 Build System <gds2dev@dataspace.cc> - 0.6.211-1
