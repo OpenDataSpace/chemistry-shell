@@ -1,4 +1,4 @@
-%global ver 0.5.201
+%global ver 0.5.217
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Tue May 24 2016 Build System <gds2dev@dataspace.cc> - 0.5.217-1
+- Automated rebuild
 * Thu Nov 26 2015 Achim Derigs <achim.derigs@graudata.com> - 0.5.201-1
 - gitrev: d8ad7803c0144c564a864de3a09256b4e3d90b1e
   fixes SCM developer connection
