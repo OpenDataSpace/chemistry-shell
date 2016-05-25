@@ -71,7 +71,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.5.1</version>
         <configuration>
           <compilerArgument>-Xlint:all</compilerArgument>
           <optimize>true</optimize>
@@ -83,7 +83,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.6</version>
+        <version>3.0.0</version>
         <configuration>
           <archive>
             <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
@@ -92,7 +92,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.19</version>
+        <version>2.19.1</version>
         <configuration>
           <excludes>
             <!-- This needs a running (Nuxeo) server to pass.
@@ -120,7 +120,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.19</version>
+        <version>2.19.1</version>
         <executions>
           <execution>
             <goals>
@@ -142,7 +142,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.7</version>
+        <version>3.0.0</version>
         <executions>
           <execution>
             <id>copy-resources</id>
@@ -165,7 +165,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
         <executions>
           <execution>
             <id>clean</id>
