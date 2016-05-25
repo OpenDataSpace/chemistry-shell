@@ -1,3 +1,12 @@
+gds2-cmissh (0.6.219-4) unstable; urgency=low
+
+  * gitrev: c9a8f9fc7dabac7804e946bee807ee0cd2274322
+    upgrades maven dependencies
+  * gitrev: 8efb5bc402e88a1f1f8dfaffe819e61440f9ee09
+    upgrades maven plugins
+
+ -- Achim Derigs <achim.derigs@graudata.com>  Wed, 25 May 2016 10:06:29 +0200
+
 gds2-cmissh (0.6.215-4) unstable; urgency=low
 
   * Automated rebuild
