@@ -1,4 +1,4 @@
-%global ver 0.6.219
+%global ver 0.6.224
 %global rel 1
 
 Name:           gds2-cmissh
@@ -35,6 +35,8 @@ make -C %{gds2root} TARGET_SYS=rpm DESTDIR=%{buildroot} install
 %{_datadir}/java/*
 
 %changelog
+* Fri Dec  8 2017 Build System <gds2dev@dataspace.cc> - 0.6.224-1
+- Automated rebuild
 * Wed May 25 2016 Achim Derigs <achim.derigs@graudata.com> - 0.6.219-1
 - gitrev: c9a8f9fc7dabac7804e946bee807ee0cd2274322
   upgrades maven dependencies
